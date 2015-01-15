@@ -1,0 +1,17 @@
+[
+{
+"modid": "ShoulderSurfing",
+"name": "ShoulderSurfing",
+"description": "Changes the vanilla third person camera to an over-the-shoulder camera, as made popular by Capcom's Resident Evil 4
+        		Includes keybindings for adjusting the camera, along with various settings in the config file.Code injection may fail if using mods that mess with the base files.",
+"version": "",
+"mcversion": "1.7.2",
+"logoFile": "logo picture (ex: "/mod/logo.png")",
+"url": "teamderpy.com": "",
+"authors": ["Joshua Powers and updated by a2937"],
+"credits": "credits",
+"parent": "",
+"screenshots": [],
+"dependencies": ["mod_MinecraftForge"]
+}
+]

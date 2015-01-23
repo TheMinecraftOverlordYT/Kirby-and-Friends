@@ -1,25 +1,20 @@
 package kirbyandfriends.render;
 
-	import java.util.Map;
-import org.lwjgl.opengl.GL11;
-
-import com.google.common.collect.Maps;
+	import org.lwjgl.opengl.GL11;
 
 import kirbyandfriends.KirbyMod;
 import kirbyandfriends.entities.EntityKirby;
 import kirbyandfriends.entities.ModelKirby;
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.entity.RenderLiving;
-import net.minecraft.client.renderer.texture.LayeredTexture;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.passive.EntityHorse;
 import net.minecraft.util.ResourceLocation;
 
 	public class RenderKirbyPaletteA extends RenderLiving {
 		
 		
 		   
-		private static final Map field_110852_a = Maps.newHashMap();
 		 private static final ResourceLocation Black= new ResourceLocation(KirbyMod.modid + ":textures/entities/BlackKirby.png"); 
 		   //private static final ResourceLocation Creepy= new ResourceLocation(KirbyMod.modid + ":textures/entities/CreepyKirby.png");
 		   private static final ResourceLocation Default= new ResourceLocation(KirbyMod.modid + ":textures/entities/DefaultKirby.png");
@@ -46,20 +41,7 @@ import net.minecraft.util.ResourceLocation;
 		   
 		   
 
-		   private ResourceLocation textureLoader(EntityKirby kirby)
-		    {
-		        String s = kirby.getHorseTexture();
-		        ResourceLocation resourcelocation = (ResourceLocation)field_110852_a.get(s);
-
-		        if (resourcelocation == null)
-		        {
-		            resourcelocation = new ResourceLocation(s);
-		            Minecraft.getMinecraft().getTextureManager().loadTexture(resourcelocation, new LayeredTexture(kirby.getVariantTexturePaths()));
-		            field_110852_a.put(s, resourcelocation);
-		        }
-
-		        return resourcelocation;
-		    }
+		  
 
 		   
 		    public RenderKirbyPaletteA(ModelKirby par1ModelBase, float par2)
@@ -82,33 +64,33 @@ import net.minecraft.util.ResourceLocation;
 		    
 		    protected ResourceLocation getEntityTexture(EntityKirby kirby)
 		    {
-		        if (!kirby.HorseReader())
-		        {
-		            switch (kirby.getHorseType())
-		            {
-		                case 0:
-		                default:
-		                    return Default;
-		                case 1:
-		                    return Black;
-		                case 2:
-		                    return Blue;
-		                case 3:
-		                    return Green;
-		                case 4:
-		                    return Yellow;
-		            }
-		        }
-		        else
-		        {
-		            return this.textureLoader(kirby);
-		        }
+		     int i = (kirby.getHorseVariant());
+				if (i== 1) {
+					return Default;
+				}
+				if (i==2){
+					return Red;
+				}
+				if (i==3){
+					return Blue;
+				}
+				if (i==4){
+					return Yellow;
+				}
+				if (i==5){
+					return Purple;
+				}
+				if (i==6){
+					return Green;
+				}
+				else
+				 return	Brown;   
 		    }
 
 
-		    protected ResourceLocation getEntityTexture(Entity kirby)
+		    protected ResourceLocation getEntityTexture(Entity p_110775_1_)
 		    {
-		        return this.getEntityTexture((EntityKirby)kirby);
+		        return this.getEntityTexture((EntityKirby)p_110775_1_);
 		    }
 
 

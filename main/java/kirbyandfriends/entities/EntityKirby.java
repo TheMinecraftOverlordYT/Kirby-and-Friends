@@ -1,6 +1,8 @@
 package kirbyandfriends.entities;
 
 
+import java.util.Random;
+
 import kirbyandfriends.KirbyMod;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
@@ -51,63 +53,20 @@ public class EntityKirby extends EntityGolem
         this.targetTasks.addTask(3, new EntityAINearestAttackableTarget(this, EntityLiving.class, 0, false, true, IMob.mobSelector));
     }
     
-    private String Path;
-    private static final String[] horseTextures = new String[] {KirbyMod.modid + ":textures/entities/DefaultKirby.png",KirbyMod.modid + ":textures/entities/BlackKirby.png",KirbyMod.modid + ":textures/entities/WhiteKirby.png", KirbyMod.modid + ":textures/entities/RedKirby.png", KirbyMod.modid + ":textures/entities/GreenKirby.png",KirbyMod.modid + ":textures/entities/BlueKirby.png", KirbyMod.modid + ":textures/entities/PurpleKirby.png"};
-    private static final String[] textureA= new String[] {"hwh", "hcr", "hch", "hbr", "hbl", "hgr", "hdb"};
-    private static final String[] textureB= new String[] {"", "wo_", "wmo", "wdo", "bdo"};
-    private static final String[] textureC = new String[] {"", "meo", "goo", "dio"};
-    private String field_110286_bQ;
-    private String[] HorseTexture = new String[3];
-   
-    public int getHorseType()
-    {
-        return this.dataWatcher.getWatchableObjectByte(19);
-    }
     
     protected void entityInit()
     {
         super.entityInit();
-        this.dataWatcher.addObject(16, Integer.valueOf(0));
-        this.dataWatcher.addObject(19, Byte.valueOf((byte)0));
         this.dataWatcher.addObject(20, Integer.valueOf(0));
-        this.dataWatcher.addObject(21, String.valueOf(""));
-        this.dataWatcher.addObject(22, Integer.valueOf(0));
-    }
-
-    @SideOnly(Side.CLIENT)
-    public boolean HorseReader()
-    {
-        return this.getHorseType() == 0 || this.GetData() > 0;
     }
     
-    public void setHorseType(int p_110214_1_)
+    
+    public void setHorseType(int i)
     {
-        this.dataWatcher.updateObject(19, Byte.valueOf((byte)p_110214_1_));
-        this.NullChecker();
+        this.dataWatcher.updateObject(20, Integer.valueOf(i));
     }
     
-    @SideOnly(Side.CLIENT)
-    public String[] getVariantTexturePaths()
-    {
-        if (this.field_110286_bQ == null)
-        {
-            this.setHorseTexturePaths();
-        }
-
-        return this.HorseTexture;
-    }
     
-    public boolean func_110256_cu()
-    {
-        int i = this.getHorseType();
-        return i == 3 || i == 4;
-    }
-
-    public boolean func_110222_cv()
-    {
-        return this.func_110256_cu() || this.getHorseType() == 2;
-    }
-
 
     /**
      * Returns true if the newer Entity AI code should be run
@@ -122,32 +81,15 @@ public class EntityKirby extends EntityGolem
         super.updateAITasks();
     }
 
-    @SideOnly(Side.CLIENT)
-    public String getHorseTexture()
-    {
-        if (this.Path == null)
-        {
-            this.setHorseTexturePaths();
-        }
-
-        return this.Path;
-    }
     
-    public int GetData()
-    {
-        return this.dataWatcher.getWatchableObjectInt(22);
-    }
     
     public void setHorseVariant(int i)
     {
+    	 Random r = new Random();
+    	 i = (r.nextInt(10)); 
         this.dataWatcher.updateObject(20, Integer.valueOf(i));
-        this.NullChecker();
     }
     
-    private void NullChecker()
-    {
-        this.Path = null;
-    }
 
     public int getHorseVariant()
     {
@@ -207,34 +149,6 @@ public class EntityKirby extends EntityGolem
         return 0.4F;
     }
     
-    @SideOnly(Side.CLIENT)
-    private void setHorseTexturePaths()
-    {
-        this.Path = KirbyMod.modid + ":textures/entities/";
-        this.HorseTexture[0] = null;
-        this.HorseTexture[1] = null;
-        this.HorseTexture[2] = null;
-        int i = this.getHorseType();
-        int j = this.getHorseVariant();
-        int k;
-
-        if (i == 0)
-        {
-            k = j & 255;
-            int l = (j & 65280) >> 8;
-            this.HorseTexture[0] = horseTextures[k];
-            this.Path = this.Path + textureA[k];
-            this.Path = this.Path + textureB[l];
-        }
-        else
-        {
-            this.HorseTexture[0] = "";
-            this.Path = this.Path + "_" + i + "_";
-        }
-
-        k = this.GetData();
-        this.Path = this.Path + textureC[k];
-    }
     
   
     

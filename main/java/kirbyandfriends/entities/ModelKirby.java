@@ -4,6 +4,7 @@ package kirbyandfriends.entities;
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.model.ModelRenderer;
 import net.minecraft.entity.Entity;
+import net.minecraft.util.MathHelper;
 
 public class ModelKirby extends ModelBase
 {
@@ -131,9 +132,18 @@ public class ModelKirby extends ModelBase
     model.rotateAngleZ = z;
   }
   
-  public void setRotationAngles(float f, float f1, float f2, float f3, float f4, float f5, Entity entity)
+  public void setRotationAngles(float par1, float par2, float par3, float par4, float par5, float par6, Entity entity)
   {
-    super.setRotationAngles(f, f1, f2, f3, f4, f5, entity);
+         float var7 = MathHelper.sin(par2 * 3.141593F);
+         float var8 = MathHelper.sin((1.0F - (1.0F - par2) * (1.0F - par2)) * 3.141593F);
+         this.RightArm.rotateAngleX = MathHelper.cos(par1 * 0.6662F + (float)Math.PI) * 2.0F * par2 * 0.5F;
+         this.LeftArm.rotateAngleX = MathHelper.cos(par1 * 0.6662F) * 2.0F * par2 * 0.5F;
+         this.RightArm.rotateAngleZ = 0.0F;
+         this.LeftArm.rotateAngleZ = 0.0F;
+         this.RightFoot.rotateAngleY = MathHelper.cos(par1 * 0.6662F) * 1.4F * par2;
+         this.LeftFoot.rotateAngleY = MathHelper.cos(par1 * 0.6662F + (float)Math.PI) * 1.4F * par2;
+         this.RightFoot.rotateAngleX = MathHelper.cos(par1 * 0.6662F) * 0.7F * par2;
+         this.LeftFoot.rotateAngleX = MathHelper.cos(par1 * 0.6662F + (float)Math.PI) * 0.7F * par2;
   }
 
 }

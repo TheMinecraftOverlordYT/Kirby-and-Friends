@@ -3,6 +3,7 @@ package kirbyandfriends.entities;
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.model.ModelRenderer;
 import net.minecraft.entity.Entity;
+import net.minecraft.util.MathHelper;
 
 public class ModelCreepyKirby extends ModelBase
 {
@@ -15,8 +16,8 @@ public class ModelCreepyKirby extends ModelBase
     ModelRenderer Top;
     ModelRenderer LeftArm;
     ModelRenderer RightArm;
-    ModelRenderer LeftFott;
-    ModelRenderer RightFott;
+    ModelRenderer LeftFoot;
+    ModelRenderer RightFoot;
   
   public ModelCreepyKirby()
   {
@@ -71,18 +72,18 @@ public class ModelCreepyKirby extends ModelBase
       RightArm.setTextureSize(512, 256);
       RightArm.mirror = true;
       setRotation(RightArm, 0F, 3.141593F, -0.1487144F);
-      LeftFott = new ModelRenderer(this, 20, 121);
-      LeftFott.addBox(-3.5F, 0F, -8F, 7, 4, 9);
-      LeftFott.setRotationPoint(-8F, 20F, 0F);
-      LeftFott.setTextureSize(512, 256);
-      LeftFott.mirror = true;
-      setRotation(LeftFott, 0F, 0.2974289F, 0F);
-      RightFott = new ModelRenderer(this, 20, 121);
-      RightFott.addBox(-3.5F, 0F, -8F, 7, 4, 9);
-      RightFott.setRotationPoint(8F, 20F, 0F);
-      RightFott.setTextureSize(512, 256);
-      RightFott.mirror = true;
-      setRotation(RightFott, 0F, -0.2974216F, 0F);
+      LeftFoot = new ModelRenderer(this, 20, 121);
+      LeftFoot.addBox(-3.5F, 0F, -8F, 7, 4, 9);
+      LeftFoot.setRotationPoint(-8F, 20F, 0F);
+      LeftFoot.setTextureSize(512, 256);
+      LeftFoot.mirror = true;
+      setRotation(LeftFoot, 0F, 0.2974289F, 0F);
+      RightFoot = new ModelRenderer(this, 20, 121);
+      RightFoot.addBox(-3.5F, 0F, -8F, 7, 4, 9);
+      RightFoot.setRotationPoint(8F, 20F, 0F);
+      RightFoot.setTextureSize(512, 256);
+      RightFoot.mirror = true;
+      setRotation(RightFoot, 0F, -0.2974216F, 0F);
   }
   
   public void render(Entity entity, float f, float f1, float f2, float f3, float f4, float f5)
@@ -97,10 +98,9 @@ public class ModelCreepyKirby extends ModelBase
     Top.render(f5);
     LeftArm.render(f5);
     RightArm.render(f5);
-    LeftFott.render(f5);
-    RightFott.render(f5);
+    LeftFoot.render(f5);
+    RightFoot.render(f5);
   }
-  
   private void setRotation(ModelRenderer model, float x, float y, float z)
   {
     model.rotateAngleX = x;
@@ -108,9 +108,21 @@ public class ModelCreepyKirby extends ModelBase
     model.rotateAngleZ = z;
   }
   
-  public void setRotationAngles(float f, float f1, float f2, float f3, float f4, float f5, Entity entity)
+  public void setRotationAngles(float par1, float par2, float par3, float par4, float par5, float par6, Entity entity)
   {
-    super.setRotationAngles(f, f1, f2, f3, f4, f5, entity);
+         float var7 = MathHelper.sin(par2 * 3.141593F);
+         float var8 = MathHelper.sin((1.0F - (1.0F - par2) * (1.0F - par2)) * 3.141593F);
+         this.RightFoot.rotateAngleY = MathHelper.cos(par1 * 0.6662F) * 1.4F * par2;
+         this.LeftFoot.rotateAngleY = MathHelper.cos(par1 * 0.6662F + (float)Math.PI) * 1.4F * par2;
+         this.RightFoot.rotateAngleX = MathHelper.cos(par1 * 0.6662F) * 0.7F * par2;
+         this.LeftFoot.rotateAngleX = MathHelper.cos(par1 * 0.6662F + (float)Math.PI) * 0.7F * par2;
+         this.RightArm.rotateAngleZ = -(0.1F - var7 * 0.6F);
+         this.LeftArm.rotateAngleZ = 0.1F - var7 * 0.6F;
+         this.RightArm.rotateAngleX+= MathHelper.cos(par3 * 0.09F) * 0.05F + 0.05F;
+         this.LeftArm.rotateAngleX-= MathHelper.cos(par3 * 0.09F) * 0.05F + 0.05F;
+         this.RightArm.rotateAngleY += MathHelper.sin(par3 * 0.067F) * 0.05F;
+         this.LeftArm.rotateAngleY -= MathHelper.sin(par3 * 0.067F) * 0.05F;
   }
+  
 
 }

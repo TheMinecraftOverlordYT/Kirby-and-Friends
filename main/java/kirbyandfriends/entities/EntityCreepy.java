@@ -3,9 +3,6 @@ package kirbyandfriends.entities;
 
 import java.util.Random;
 
-import kirbyandfriends.KirbyMod;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.block.Block;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLiving;
@@ -20,25 +17,23 @@ import net.minecraft.entity.ai.EntityAISwimming;
 import net.minecraft.entity.ai.EntityAITempt;
 import net.minecraft.entity.ai.EntityAIWander;
 import net.minecraft.entity.ai.EntityAIWatchClosest;
-import net.minecraft.entity.monster.EntityGolem;
-import net.minecraft.entity.monster.IMob;
+import net.minecraft.entity.monster.EntityZombie;
 import net.minecraft.entity.passive.EntityAnimal;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.util.DamageSource;
-import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
 
 
 
-public class EntityKirby extends EntityGolem 
+public class EntityCreepy extends EntityZombie
 {
 	 Random r = new Random();
  	int i = (r.nextInt(10)); 
  	
-    public EntityKirby(World world)
+    public EntityCreepy(World world)
     {
         super(world);
         this.setSize(0.5F, 0.5F);
@@ -55,20 +50,11 @@ public class EntityKirby extends EntityGolem
         this.tasks.addTask(6, new EntityAIWander(this, 1.0D));
         this.tasks.addTask(7, new EntityAIWatchClosest(this, EntityPlayer.class, 6.0F));
         this.tasks.addTask(8, new EntityAILookIdle(this));
-        this.targetTasks.addTask(3, new EntityAINearestAttackableTarget(this, EntityLiving.class, 0, false, true, IMob.mobSelector));
+        this.targetTasks.addTask(2, new EntityAINearestAttackableTarget(this, EntityLiving.class, 0, true));
+        this.tasks.addTask(9, new EntityAIPanic(this, newPosX));
+ 
+
     }
-    
-	 private static final ResourceLocation Black= new ResourceLocation(KirbyMod.modid + ":textures/entities/BlackKirby.png"); 
-	   //private static final ResourceLocation Creepy= new ResourceLocation(KirbyMod.modid + ":textures/entities/CreepyKirby.png");
-	   private static final ResourceLocation Default= new ResourceLocation(KirbyMod.modid + ":textures/entities/DefaultKirby.png");
-	   private static final ResourceLocation White= new ResourceLocation(KirbyMod.modid + ":textures/entities/WhiteKirby.png");
-	   private static final ResourceLocation Red= new ResourceLocation(KirbyMod.modid + ":textures/entities/RedKirby.png");
-	   private static final ResourceLocation Blue= new ResourceLocation(KirbyMod.modid + ":textures/entities/BlueKirby.png");
-	   private static final ResourceLocation Green = new ResourceLocation(KirbyMod.modid + ":textures/entities/GreenKirby.png");
-	   private static final ResourceLocation Purple = new ResourceLocation(KirbyMod.modid + ":textures/entities/PurpleKirby.png");
-	   private static final ResourceLocation Yellow = new ResourceLocation(KirbyMod.modid + ":textures/entities/YellowKirby.png");
-	   private static final ResourceLocation Brown = new ResourceLocation(KirbyMod.modid + ":textures/entities/BrownKirby.png");
-	   
     protected void entityInit()
     {
         super.entityInit();
@@ -112,34 +98,6 @@ public class EntityKirby extends EntityGolem
         return this.dataWatcher.getWatchableObjectInt(20);
     }
     
-    public ResourceLocation getresource(){ 
-    	if (i== 1) {
-			return Default;
-		}
-		if (i==2){
-			return Red;
-		}
-		if (i==3){
-			return Blue;
-		}
-		if (i==4){
-			return Yellow;
-		}
-		if (i==5){
-			return Purple;
-		}
-		if (i==6){
-			return Green;
-		}
-		if (i==7){
-			return White;
-		}
-		if (i==8){
-			return Black;
-		}
-		else
-		 return	Brown;   
-    }
     
     
     protected void applyEntityAttributes()
@@ -209,9 +167,9 @@ public class EntityKirby extends EntityGolem
         this.playSound("mob.sheep.step", 0.15F, 1.0F);
     }
     
-    public EntityKirby createChild(EntityAnimal par1EntityAnimal)
+    public EntityCreepy createChild(EntityAnimal par1EntityAnimal)
     {
-      return new EntityKirby(worldObj);
+      return new EntityCreepy(worldObj);
     }
    
     }

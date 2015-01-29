@@ -37,7 +37,7 @@ public class KirbyMod {
 	
 	
 
-	public static CreativeTabs tabCustom = new CreativeTabs("Pigman") {
+	public static CreativeTabs tabCustom = new CreativeTabs("Kirby") {
 	    @Override
 	    @SideOnly(Side.CLIENT)
 	    public Item getTabIconItem() {

@@ -1,5 +1,0 @@
- {
-  "mob.KirbyDeath": {"category": "master","sounds": [{"name": "mob/KirbyDeath","stream": false}]},
-  "mob.KirbySound1": {"category": "master","sounds": [{"name": "mob/KirbySound1","stream": false}]},
-  "mob.KirbySound2": {"category": "master","sounds": [{"name": "mob/KirbySound2","stream": false}]}
-  }

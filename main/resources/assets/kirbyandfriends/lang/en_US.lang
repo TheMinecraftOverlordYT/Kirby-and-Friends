@@ -1,3 +1,4 @@
-itemGroup.Pigman=Kirby
+itemGroup.Kirby=Kirby
 entity.Kirby.name=Kirby
-item.custommonsterplacer.name=Spawn
+entity.CreepyKirby.name=Creepy Kirby
+item.custommonsterplacer.name=Dial for 

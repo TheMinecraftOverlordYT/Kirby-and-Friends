@@ -4,10 +4,9 @@ package kirbyandfriends.entities;
 import java.util.Random;
 
 import kirbyandfriends.KirbyMod;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.block.Block;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityAgeable;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.EntityAIAttackOnCollide;
@@ -24,7 +23,6 @@ import net.minecraft.entity.monster.EntityGolem;
 import net.minecraft.entity.monster.IMob;
 import net.minecraft.entity.passive.EntityAnimal;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.util.DamageSource;
@@ -33,7 +31,7 @@ import net.minecraft.world.World;
 
 
 
-public class EntityKirby extends EntityGolem 
+public class EntityKirby extends EntityGolem
 {
 	 Random r = new Random();
  	int i = (r.nextInt(10)); 
@@ -58,9 +56,8 @@ public class EntityKirby extends EntityGolem
         this.targetTasks.addTask(3, new EntityAINearestAttackableTarget(this, EntityLiving.class, 0, false, true, IMob.mobSelector));
     }
     
-	 private static final ResourceLocation Black= new ResourceLocation(KirbyMod.modid + ":textures/entities/BlackKirby.png"); 
-	   //private static final ResourceLocation Creepy= new ResourceLocation(KirbyMod.modid + ":textures/entities/CreepyKirby.png");
-	   private static final ResourceLocation Default= new ResourceLocation(KirbyMod.modid + ":textures/entities/DefaultKirby.png");
+	 private static final ResourceLocation Black= new ResourceLocation(KirbyMod.modid + ":textures/entities/ShadowKirby.png"); 
+	   private static final ResourceLocation Default= new ResourceLocation(KirbyMod.modid + ":textures/entities/PinkKirby.png");
 	   private static final ResourceLocation White= new ResourceLocation(KirbyMod.modid + ":textures/entities/WhiteKirby.png");
 	   private static final ResourceLocation Red= new ResourceLocation(KirbyMod.modid + ":textures/entities/RedKirby.png");
 	   private static final ResourceLocation Blue= new ResourceLocation(KirbyMod.modid + ":textures/entities/BlueKirby.png");
@@ -158,7 +155,7 @@ public class EntityKirby extends EntityGolem
 
     protected Item getDropItem()
     {
-        return Item.getItemFromBlock(Blocks.wool);
+        return KirbyMod.wishstar;
     }
 
 
@@ -210,6 +207,12 @@ public class EntityKirby extends EntityGolem
     }
     
     public EntityKirby createChild(EntityAnimal par1EntityAnimal)
+    {
+      return new EntityKirby(worldObj);
+    }
+
+
+    public EntityKirby createChild(EntityAgeable par1EntityAnimal)
     {
       return new EntityKirby(worldObj);
     }

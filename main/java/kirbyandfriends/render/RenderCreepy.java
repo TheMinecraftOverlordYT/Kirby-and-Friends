@@ -4,7 +4,6 @@ import org.lwjgl.opengl.GL11;
 
 import kirbyandfriends.KirbyMod;
 import kirbyandfriends.entities.EntityCreepy;
-import kirbyandfriends.entities.ModelCreepyKirby;
 import kirbyandfriends.entities.ModelKirby;
 import net.minecraft.client.renderer.entity.RenderLiving;
 import net.minecraft.entity.Entity;
@@ -36,7 +35,7 @@ public class RenderCreepy extends RenderLiving {
 	  
 
 	   
-	    public RenderCreepy(ModelCreepyKirby modelCreepyKirby, float par2)
+	    public RenderCreepy(ModelKirby modelCreepyKirby, float par2)
 	    {
 	        super(modelCreepyKirby, par2);
 	        

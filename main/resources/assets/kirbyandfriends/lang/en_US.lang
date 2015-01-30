@@ -2,3 +2,5 @@ itemGroup.Kirby=Kirby
 entity.Kirby.name=Kirby
 entity.CreepyKirby.name=Creepy Kirby
 item.custommonsterplacer.name=Dial for 
+item.wishstar.name=Wish Star
+tile.DreamBlock.name=Dream Block

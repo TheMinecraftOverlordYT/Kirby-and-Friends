@@ -12,28 +12,6 @@ import net.minecraft.util.ResourceLocation;
 	public class RenderKirbyPaletteA extends RenderLiving {
 		
 		
-		   
-
-		
-		  
-		   
-//		   public ModelBase createRandom() {
-//			   Random r = new Random();
-//			   switch(r.nextInt(10)) {
-//			       case 1: return new ModelRedKirby();
-//			       case 2: return new ModelBrownKirby();
-//			       case 3: return new ModelBlueKirby();
-//			       case 4: return new ModelWhiteKirby();
-//			       
-//			       default: return new ModelKirby();
-//			   } 
-//			}
-		   
-		   
-
-		  
-
-		   
 		    public RenderKirbyPaletteA(ModelKirby par1ModelBase, float par2)
 		    {
 		        super(par1ModelBase, par2);

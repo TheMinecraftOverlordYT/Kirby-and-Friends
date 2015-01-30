@@ -234,7 +234,6 @@ public class CustomEntityList
    	 addMapping(EntityLiving.class, "Mob", 48);
    	 addMapping(EntityMob.class, "Monster", 49);
    	addMapping(EntityKirby.class, "Kirby", 401,15771042 , 14377823);
-   	addMapping(EntityCreepy.class, "CreepyKirby", 402,15771042 , 14377823);
     }
 
     public static class MyEntityEggInfo

@@ -3,6 +3,7 @@ package kirbyandfriends.entities;
 
 import java.util.Random;
 
+import kirbyandfriends.KirbyMod;
 import net.minecraft.block.Block;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLiving;
@@ -116,7 +117,7 @@ public class EntityCreepy extends EntityZombie
 
     protected Item getDropItem()
     {
-        return Item.getItemFromBlock(Blocks.wool);
+        return KirbyMod.wishstar;
     }
 
 

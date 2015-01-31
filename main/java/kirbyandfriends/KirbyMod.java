@@ -25,7 +25,7 @@ import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import kirbyandfriends.blocks.DreamBlock;
 
-@Mod(modid=KirbyMod.modid,name = "Kirby and Friends",version = "0.4")
+@Mod(modid=KirbyMod.modid,name = "Kirby and Friends",version = "1")
 
 public class KirbyMod {
 	@SidedProxy(clientSide="kirbyandfriends.ClientProxyClass", serverSide="kirbyandfriends.MyCommonProxy")

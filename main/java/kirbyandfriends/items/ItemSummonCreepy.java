@@ -72,7 +72,7 @@ public class ItemSummonCreepy extends Item {
 	            }
 
 	             entitycreepy = new EntityCreepy(p_77648_3_);
-	             entitycreepy.setLocationAndAngles(p_77840_2_, p_77840_4_, p_77840_6_, MathHelper.wrapAngleTo180_float(p_77840_0_.rand.nextFloat() * 360.0F), 0.0F);
+	          //   entitycreepy.setLocationAndAngles(p_77840_2_, p_77840_4_, p_77840_6_, MathHelper.wrapAngleTo180_float(p_77840_0_.rand.nextFloat() * 360.0F), 0.0F);
 	                entitycreepy.rotationYawHead = entitycreepy.rotationYaw;
 	                entitycreepy.renderYawOffset = entitycreepy.rotationYaw;
 	                entitycreepy.onSpawnWithEgg((IEntityLivingData)null);

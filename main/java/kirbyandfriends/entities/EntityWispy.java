@@ -4,7 +4,10 @@ import net.minecraft.block.Block;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.Entity;
+<<<<<<< HEAD
 import net.minecraft.entity.EntityLiving;
+=======
+>>>>>>> origin/master
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.EnumCreatureAttribute;
 import net.minecraft.entity.IRangedAttackMob;
@@ -29,6 +32,11 @@ import net.minecraft.world.World;
 
 public class EntityWispy extends EntityMob implements IRangedAttackMob
 {
+<<<<<<< HEAD
+=======
+    private EntityAIArrowAttack aiArrowAttack = new EntityAIArrowAttack(this, 1.0D, 20, 60, 15.0F);
+    private EntityAIAttackOnCollide aiAttackOnCollide = new EntityAIAttackOnCollide(this, EntityPlayer.class, 1.2D, false);
+>>>>>>> origin/master
     
     public EntityWispy(World p_i1741_1_)
     {
@@ -40,10 +48,18 @@ public class EntityWispy extends EntityMob implements IRangedAttackMob
         this.targetTasks.addTask(1, new EntityAIHurtByTarget(this, false));
         this.targetTasks.addTask(2, new EntityAINearestAttackableTarget(this, EntityPlayer.class, 0, true));
         this.targetTasks.addTask(2, new EntityAINearestAttackableTarget(this, EntityKirby.class, 0, true));
+<<<<<<< HEAD
     	this.tasks.addTask(1, new EntityAIArrowAttack(this, 1.25D, 20, 10.0F));
 		this.targetTasks.addTask(1, new EntityAINearestAttackableTarget(this, EntityLiving.class, 0, true));
 		this.targetTasks.addTask(1,new EntityAIAttackOnCollide(this, EntityPlayer.class, 1.2D, false));
 		
+=======
+        
+        if (p_i1741_1_ != null && !p_i1741_1_.isRemote)
+        {
+            this.setCombatTask();
+        }
+>>>>>>> origin/master
     }
 
     protected void applyEntityAttributes()
@@ -213,8 +229,37 @@ public class EntityWispy extends EntityMob implements IRangedAttackMob
         }
     }
     
+<<<<<<< HEAD
     
     
+=======
+    protected void addRandomArmor()
+    {
+        super.addRandomArmor();
+        this.setCurrentItemOrArmor(0, new ItemStack(Items.bow));
+    }
+    
+    
+    
+    /**
+     * sets this entity's combat AI.
+     */
+    public void setCombatTask()
+    {
+        this.tasks.removeTask(this.aiAttackOnCollide);
+        this.tasks.removeTask(this.aiArrowAttack);
+        ItemStack itemstack = this.getHeldItem();
+
+        if (itemstack != null && itemstack.getItem() == Items.bow)
+        {
+            this.tasks.addTask(4, this.aiArrowAttack);
+        }
+        else
+        {
+            this.tasks.addTask(4, this.aiAttackOnCollide);
+        }
+    }
+>>>>>>> origin/master
 
     /**
      * Attack the specified entity using a ranged attack.

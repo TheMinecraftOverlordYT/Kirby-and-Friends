@@ -52,16 +52,23 @@ public class ItemSummonCreepy extends Item {
 
 	   
 	   
+<<<<<<< HEAD
 	   public boolean onItemUse(ItemStack itemstack, EntityPlayer player, World world, int p_77648_4_, int p_77648_5_, int p_77648_6_, int p_77648_7_, float p_77648_8_, float p_77648_9_, float p_77648_10_)
 	    {
 		   
 		   
 	        if (world.isRemote)
+=======
+	   public boolean onItemUse(ItemStack itemstack, EntityPlayer p_77648_2_, World p_77648_3_, int p_77648_4_, int p_77648_5_, int p_77648_6_, int p_77648_7_, float p_77648_8_, float p_77648_9_, float p_77648_10_)
+	    {
+	        if (p_77648_3_.isRemote)
+>>>>>>> origin/master
 	        {
 	            return true;
 	        }
 	        else
 	        {
+<<<<<<< HEAD
 	        	
 	        	
 	            Block block = world.getBlock(p_77648_4_, p_77648_5_, p_77648_6_);
@@ -69,6 +76,12 @@ public class ItemSummonCreepy extends Item {
 	            p_77648_5_ += Facing.offsetsYForSide[p_77648_7_];
 	            p_77648_6_ += Facing.offsetsZForSide[p_77648_7_];
 	     
+=======
+	            Block block = p_77648_3_.getBlock(p_77648_4_, p_77648_5_, p_77648_6_);
+	            p_77648_4_ += Facing.offsetsXForSide[p_77648_7_];
+	            p_77648_5_ += Facing.offsetsYForSide[p_77648_7_];
+	            p_77648_6_ += Facing.offsetsZForSide[p_77648_7_];
+>>>>>>> origin/master
 	            double d0 = 0.0D;
 
 	            if (p_77648_7_ == 1 && block.getRenderType() == 11)
@@ -76,7 +89,17 @@ public class ItemSummonCreepy extends Item {
 	                d0 = 0.5D;
 	            }
 
+<<<<<<< HEAD
 	            Entity entity = spawnCreature(world,  (double)p_77648_4_ + 0.5D, (double)p_77648_5_ + d0, (double)p_77648_6_ + 0.5D);
+=======
+	             entitycreepy = new EntityCreepy(p_77648_3_);
+	          //   entitycreepy.setLocationAndAngles(p_77840_2_, p_77840_4_, p_77840_6_, MathHelper.wrapAngleTo180_float(p_77840_0_.rand.nextFloat() * 360.0F), 0.0F);
+	                entitycreepy.rotationYawHead = entitycreepy.rotationYaw;
+	                entitycreepy.renderYawOffset = entitycreepy.rotationYaw;
+	                entitycreepy.onSpawnWithEgg((IEntityLivingData)null);
+	                p_77648_3_.spawnEntityInWorld(entitycreepy);
+	                entitycreepy.playLivingSound();
+>>>>>>> origin/master
 
 	            if (entitycreepy != null)
                 {
@@ -86,7 +109,11 @@ public class ItemSummonCreepy extends Item {
                     }
 	            
 	            
+<<<<<<< HEAD
 	                if (!player.capabilities.isCreativeMode)
+=======
+	                if (!p_77648_2_.capabilities.isCreativeMode)
+>>>>>>> origin/master
 	                {
 	                    --itemstack.stackSize;
 	                }
@@ -95,7 +122,11 @@ public class ItemSummonCreepy extends Item {
 	            return true;
 	        }
 	    }
+<<<<<<< HEAD
 public static Entity spawnCreature(World p_77840_0_, double p_77840_2_, double p_77840_4_, double p_77840_6_)
+=======
+public static Entity spawnCreature(World p_77840_0_, int p_77840_1_, double p_77840_2_, double p_77840_4_, double p_77840_6_)
+>>>>>>> origin/master
 {
 
     Entity  entity = entitycreepy;
@@ -149,7 +180,11 @@ public static Entity spawnCreature(World p_77840_0_, double p_77840_2_, double p
 
 	                    if (p_77659_2_.getBlock(i, j, k) instanceof BlockLiquid)
 	                    {
+<<<<<<< HEAD
 	                        Entity entity = spawnCreature(p_77659_2_, (double)i, (double)j, (double)k);
+=======
+	                        Entity entity = spawnCreature(p_77659_2_, p_77659_1_.getItemDamage(), (double)i, (double)j, (double)k);
+>>>>>>> origin/master
 
 	                        if (entity != null)
 	                        {

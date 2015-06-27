@@ -23,7 +23,10 @@ import net.minecraft.util.ResourceLocation;
 		    protected void preRenderCallback(EntityKirby kirby, float size)
 		    {
 		        GL11.glScalef(0.5f, 0.5f, 0.5f);
+<<<<<<< HEAD
 		        if(kirby.isFlying)
+=======
+>>>>>>> origin/master
 		        GL11.glRotatef(-180F, 0, 1, 0);
 		    }
 		    

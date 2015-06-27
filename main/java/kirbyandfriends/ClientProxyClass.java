@@ -6,7 +6,10 @@ import kirbyandfriends.entities.EntityDedede;
 import kirbyandfriends.entities.EntityKirby;
 import kirbyandfriends.entities.EntityThrownApple;
 import kirbyandfriends.entities.EntityThrownEmerald;
+<<<<<<< HEAD
 import kirbyandfriends.entities.EntityThrownWishStar;
+=======
+>>>>>>> origin/master
 import kirbyandfriends.entities.EntityWaddleDee;
 import kirbyandfriends.entities.EntityWaddleDoo;
 import kirbyandfriends.entities.EntityWispy;
@@ -20,7 +23,10 @@ import kirbyandfriends.render.RenderCreepy;
 import kirbyandfriends.render.RenderDedede;
 import kirbyandfriends.render.RenderKirbyPaletteA;
 import kirbyandfriends.render.RenderWaddleDee;
+<<<<<<< HEAD
 import kirbyandfriends.render.RenderWaddleDoo;
+=======
+>>>>>>> origin/master
 import kirbyandfriends.render.RenderWispy;
 import cpw.mods.fml.client.FMLClientHandler;
 import cpw.mods.fml.client.registry.RenderingRegistry;
@@ -85,14 +91,22 @@ public class ClientProxyClass extends MyCommonProxy {
 	public void registerRenderers() {
 	RenderingRegistry.registerEntityRenderingHandler(EntityThrownApple.class, new RenderSnowball(Items.apple));
 	RenderingRegistry.registerEntityRenderingHandler(EntityThrownEmerald.class, new RenderSnowball(Items.emerald));
+<<<<<<< HEAD
 	RenderingRegistry.registerEntityRenderingHandler(EntityThrownWishStar.class, new RenderSnowball(KirbyMod.wishstar));
 	RenderingRegistry.registerEntityRenderingHandler(EntityKirby.class, new RenderKirbyPaletteA(new ModelKirby(), 0.3F));
+=======
+	  RenderingRegistry.registerEntityRenderingHandler(EntityKirby.class, new RenderKirbyPaletteA(new ModelKirby(), 0.3F));
+>>>>>>> origin/master
 	  RenderingRegistry.registerEntityRenderingHandler(EntityCreepy.class, new RenderCreepy(new ModelWaddleDee(), 0.3F));
 	  RenderingRegistry.registerEntityRenderingHandler(EntityBlipper.class, new RenderBlipper(new ModelBlipper(), 0.3F));
 	  RenderingRegistry.registerEntityRenderingHandler(EntityDedede.class, new RenderDedede(new ModelDedede(), 0.3F));
 	  RenderingRegistry.registerEntityRenderingHandler(EntityWaddleDee.class, new RenderWaddleDee(new ModelWaddleDee(), 0.3F));
 	  RenderingRegistry.registerEntityRenderingHandler(EntityWispy.class, new RenderWispy(new ModelWispy(), 0.3F));
+<<<<<<< HEAD
       RenderingRegistry.registerEntityRenderingHandler(EntityWaddleDoo.class, new RenderWaddleDoo(new ModelWaddleDee(), 0.3F));
+=======
+      RenderingRegistry.registerEntityRenderingHandler(EntityWaddleDoo.class, new RenderWaddleDee(new ModelWaddleDee(), 0.3F));
+>>>>>>> origin/master
 	}
 	public Object getServerGuiElement(int ID, EntityPlayer player, World world, int x, int y, int z) {
 		return null;

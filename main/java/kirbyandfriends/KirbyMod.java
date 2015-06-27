@@ -52,8 +52,11 @@ public class KirbyMod {
 	public static Item maxim_tomato;
 	public static Item lollipop;
 	public int WispySpawnRate;
+<<<<<<< HEAD
 	public static int KirbyPhoneColor;
 	public static int WaddleDooPhoneColor;
+=======
+>>>>>>> origin/master
 	 public static Item custommonsterplacer;
 	 public static Item wishstar;
 	 public static Item creepyspawn;
@@ -91,8 +94,12 @@ public class KirbyMod {
 	    DededeSpawnRate= config.get("Options", "Dedede spawn rate", 10).getInt();
 	    BlipperSpawnRate= config.get("Options", "Blipper spawn rate", 10).getInt();
 	    WispySpawnRate= config.get("Options", "Whispy spawn rate", 10).getInt();
+<<<<<<< HEAD
 	    KirbyPhoneColor = config.get("Options", "Color for Kirby`s phone(Use this calculation:(myColor.getRed() << 16) + (myColor.getGreen() << 8) + myColor.getBlue();",  15771042).getInt();
 	 	WaddleDooPhoneColor = config.get("Options", "Color for Waddle Doo`s phone", 14377823).getInt(); 
+=======
+	 	  
+>>>>>>> origin/master
 	    config.save();
 		 proxy.registerRenderers();
 		 //RenderingRegistry.registerEntityRenderingHandler(EntityKirby.class, new RenderKirbyPaletteA(new ModelKirby(), 0.3F));
@@ -130,7 +137,10 @@ public class KirbyMod {
 		EntityRegistry.registerModEntity(EntityWaddleDee.class, "Waddle Dee", ++entityid, this, 43, 3, true);
 		EntityRegistry.registerModEntity(EntityThrownApple.class, "Thrown Apple", ++entityid, this, 64, 10, true);
 		EntityRegistry.registerModEntity(EntityThrownEmerald.class, "Thrown Emerald" , ++entityid, this, 64,10, true);
+<<<<<<< HEAD
 		EntityRegistry.registerModEntity(EntityThrownWishStar.class, "Thrown Wish Star" , ++entityid, this, 64,10, true);
+=======
+>>>>>>> origin/master
 		EntityRegistry.registerModEntity(EntityWispy.class, "Wispy", ++entityid, this, 64, 10, true);
 		EntityRegistry.registerModEntity(EntityWaddleDoo.class, "WaddleDoo", ++entityid, this, 64, 10, true);
 		

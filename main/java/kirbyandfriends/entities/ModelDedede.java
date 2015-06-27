@@ -48,6 +48,7 @@ public class ModelDedede extends ModelBase
       hat_main.setTextureSize(512, 256);
       hat_main.mirror = true;
       setRotation(hat_main, 0F, 0F, 0F);
+<<<<<<< HEAD
       hat_main.offsetY = -0.43F;
       hat_main.offsetX = 0.07F; 
      hat_main.offsetZ = 0.07F; 
@@ -64,15 +65,21 @@ public class ModelDedede extends ModelBase
       hat.offsetZ = 0.05F;
       
       
+=======
+     
+>>>>>>> origin/master
       hat_topper = new ModelRenderer(this, 60, 60);
       hat_topper.addBox(0F, -1F, 0F, 2, 2, 2);
       hat_topper.setRotationPoint(-1F, -3F, -1F);
       hat_topper.setTextureSize(512, 256);
       hat_topper.mirror = true;
       setRotation(hat_topper, 0F, 0F, 0F);
+<<<<<<< HEAD
       hat_topper.offsetY = -0.43F;
       hat_topper.offsetX = 0.07F;
       hat_topper.offsetZ = 0.05F; 
+=======
+>>>>>>> origin/master
      
       hammer_top = new ModelRenderer(this, 100, 100);
       hammer_top.addBox(0F, -15F, 0F, 2, 20, 2);
@@ -80,12 +87,16 @@ public class ModelDedede extends ModelBase
       hammer_top.setTextureSize(512, 256);
       hammer_top.mirror = true;
       setRotation(hammer_top, 2.478368F, 0F, 0F);
+<<<<<<< HEAD
       hammer_top.offsetY = -0.15F;
       hammer_top.offsetX = -0.25F;
       hammer_top.offsetZ = 0.39F;
       
       
      
+=======
+      
+>>>>>>> origin/master
       hammer_stick = new ModelRenderer(this, 100, 0);
       hammer_stick.addBox(0F, -2F, 0F, 8, 8, 16);
       hammer_stick.setRotationPoint(5.5F, -5F, 12F);
@@ -93,7 +104,16 @@ public class ModelDedede extends ModelBase
       hammer_stick.mirror = true;
       setRotation(hammer_stick, 2.565634F, 0F, 0F);
       
+<<<<<<< HEAD
 
+=======
+      hat = new ModelRenderer(this, 100, 100);
+      hat.addBox(0F, 0F, 0F, 4, 2, 1);
+      hat.setRotationPoint(-2F, -3F, -5F);
+      hat.setTextureSize(512, 256);
+      hat.mirror = true;
+      setRotation(hat, 0F, 0F, 0F);
+>>>>>>> origin/master
       
       
       
@@ -103,9 +123,12 @@ public class ModelDedede extends ModelBase
       mouth_piece_6.setTextureSize(512, 256);
       mouth_piece_6.mirror = true;
       setRotation(mouth_piece_6, 0F, 0F, 0F);
+<<<<<<< HEAD
       mouth_piece_6.offsetY = -0.23F;
       mouth_piece_6.offsetZ = 0.23F; 
       
+=======
+>>>>>>> origin/master
      
       mouth_piece_5 = new ModelRenderer(this, 123, 234);
       mouth_piece_5.addBox(0F, 0F, 0F, 4, 1, 1);
@@ -113,9 +136,12 @@ public class ModelDedede extends ModelBase
       mouth_piece_5.setTextureSize(512, 256);
       mouth_piece_5.mirror = true;
       setRotation(mouth_piece_5, 0F, 0F, 0F);
+<<<<<<< HEAD
       mouth_piece_5.offsetY = -0.23F;
       mouth_piece_5.offsetZ = 0.23F; 
       
+=======
+>>>>>>> origin/master
      
       mouth_piece_4 = new ModelRenderer(this, 256, 100);
       mouth_piece_4.addBox(0F, 0F, 0F, 2, 1, 1);
@@ -123,10 +149,13 @@ public class ModelDedede extends ModelBase
       mouth_piece_4.setTextureSize(512, 256);
       mouth_piece_4.mirror = true;
       setRotation(mouth_piece_4, 0F, 0F, 0F);
+<<<<<<< HEAD
       mouth_piece_4.offsetY = -0.23F;
       mouth_piece_4.offsetZ = 0.23F; 
       
       
+=======
+>>>>>>> origin/master
       
       mouth_piece_3 = new ModelRenderer(this, 23, 245);
       mouth_piece_3.addBox(0F, 0F, 0F, 2, 1, 1);
@@ -134,8 +163,11 @@ public class ModelDedede extends ModelBase
       mouth_piece_3.setTextureSize(512, 256);
       mouth_piece_3.mirror = true;
       setRotation(mouth_piece_3, 0F, 0F, 0F);
+<<<<<<< HEAD
       mouth_piece_3.offsetY = -0.23F;
       mouth_piece_3.offsetZ = 0.23F; 
+=======
+>>>>>>> origin/master
      
       mouth_piece_2 = new ModelRenderer(this, 400, 123);
       mouth_piece_2.addBox(0F, 0F, 0F, 2, 1, 1);
@@ -143,10 +175,13 @@ public class ModelDedede extends ModelBase
       mouth_piece_2.setTextureSize(512, 256);
       mouth_piece_2.mirror = true;
       setRotation(mouth_piece_2, 0F, 0F, 0F);
+<<<<<<< HEAD
       mouth_piece_2.offsetY = -0.23F;
       mouth_piece_2.offsetZ = 0.23F; 
       
       
+=======
+>>>>>>> origin/master
       
       mouth_piece_1 = new ModelRenderer(this, 200, 25);
       mouth_piece_1.addBox(0F, 0F, 0F, 2, 1, 1);
@@ -154,9 +189,12 @@ public class ModelDedede extends ModelBase
       mouth_piece_1.setTextureSize(512, 256);
       mouth_piece_1.mirror = true;
       setRotation(mouth_piece_1, 0F, 0F, 0F);
+<<<<<<< HEAD
       mouth_piece_1.offsetY = -0.23F;
       mouth_piece_1.offsetZ = 0.23F; 
       
+=======
+>>>>>>> origin/master
       
       back_shoulder_piece_1 = new ModelRenderer(this, 300, 9);
       back_shoulder_piece_1.addBox(0F, 0F, 0F, 8, 5, 1);
@@ -230,11 +268,21 @@ public class ModelDedede extends ModelBase
       head.addChild(hat);
       head.addChild(hat_topper);
       head.addChild(hat_main);
+<<<<<<< HEAD
 
       
       
    
 
+=======
+      head.addChild(mouth_piece_1);
+      head.addChild(mouth_piece_2);
+      head.addChild(mouth_piece_3);
+      head.addChild(mouth_piece_4);
+      head.addChild(mouth_piece_5);
+      head.addChild(mouth_piece_6);
+      head.addChild(Beak);
+>>>>>>> origin/master
       
       body = new ModelRenderer(this, 200, 200);
       body.addBox(-4F, 0F, -2F, 14, 14, 12);
@@ -257,7 +305,11 @@ public class ModelDedede extends ModelBase
       rightarm.addChild(right_shoulder_piece_3);
       rightarm.addChild(right_shoulder_piece_4);
       rightarm.addChild(right_shoulder_piece_5);
+<<<<<<< HEAD
      right_shoulder_piece_1.offsetY = 0.25F; 
+=======
+     
+>>>>>>> origin/master
       
       leftarm = new ModelRenderer(this, 400, 16);
       leftarm.addBox(-1F, -2F, -2F, 4, 12, 4);
@@ -291,6 +343,7 @@ public class ModelDedede extends ModelBase
       Beak.setTextureSize(512, 256);
       Beak.mirror = true;
       setRotation(Beak, 0F, 0F, 0F);
+<<<<<<< HEAD
       head.addChild(mouth_piece_1);
       head.addChild(mouth_piece_2);
       head.addChild(mouth_piece_3);
@@ -307,6 +360,10 @@ public class ModelDedede extends ModelBase
   }
   
   
+=======
+  }
+  
+>>>>>>> origin/master
   public void render(Entity entity, float f, float f1, float f2, float f3, float f4, float f5)
   {
     super.render(entity, f, f1, f2, f3, f4, f5);

@@ -6,7 +6,6 @@ import cpw.mods.fml.relauncher.SideOnly;
 import java.util.Iterator;
 import java.util.List;
 
-import kirbyandfriends.KirbyMod;
 import kirbyandfriends.items.CustomEntityList.MyEntityEggInfo;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockLiquid;
@@ -30,12 +29,11 @@ public class CustomMonsterPlacer extends Item
 {
     @SideOnly(Side.CLIENT)
     private IIcon theIcon;
-    private static final String __OBFID = "CL_00000070";
 
     public CustomMonsterPlacer()
     {
         this.setHasSubtypes(true);
-        this.setCreativeTab(CreativeTabs.tabMisc);
+       // this.setCreativeTab(CreativeTabs.tabMisc);
     }
 
     public String getItemStackDisplayName(ItemStack p_77653_1_)
@@ -62,7 +60,7 @@ public class CustomMonsterPlacer extends Item
      * Callback for item usage. If the item does something special on right clicking, he will have one of those. Return
      * True if something happen and false if it don't. This is for ITEMS, not BLOCKS
      */
-    public boolean onItemUse(ItemStack p_77648_1_, EntityPlayer p_77648_2_, World p_77648_3_, int p_77648_4_, int p_77648_5_, int p_77648_6_, int p_77648_7_, float p_77648_8_, float p_77648_9_, float p_77648_10_)
+   public boolean onItemUse(ItemStack p_77648_1_, EntityPlayer p_77648_2_, World p_77648_3_, int p_77648_4_, int p_77648_5_, int p_77648_6_, int p_77648_7_, float p_77648_8_, float p_77648_9_, float p_77648_10_)
     {
         if (p_77648_3_.isRemote)
         {
@@ -100,6 +98,17 @@ public class CustomMonsterPlacer extends Item
         }
     }
 
+    
+/*    @Override
+    public boolean onItemUse(ItemStack itemStack, EntityPlayer entityPlayer, World world, int x, int y, int z, int sideHit, float hitVecX, float hitVecY, float hitVecZ) {
+
+        if (!world.isRemote) {
+        	
+        	 Minecraft.getMinecraft().displayGuiScreen(
+                     new GuiOrderForm(entityPlayer)); 
+        }
+        return true;
+    }*/
     /**
      * Called whenever this item is equipped and the right mouse button is pressed. Args: itemStack, world, entityPlayer
      */
@@ -159,7 +168,7 @@ public class CustomMonsterPlacer extends Item
         }
     }
 
-    /**
+    /*
      * Spawns the creature specified by the egg's type in the location specified by the last three parameters.
      * Parameters: world, entityID, x, y, z.
      */
@@ -227,6 +236,6 @@ public class CustomMonsterPlacer extends Item
     public void registerIcons(IIconRegister iconregister)
     {
         super.registerIcons(iconregister);
-        this.theIcon = iconregister.registerIcon(this.getIconString() + "_overlay");
+     this.theIcon = iconregister.registerIcon(this.getIconString() + "_overlay");
     }
 }

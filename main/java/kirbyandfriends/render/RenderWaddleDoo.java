@@ -3,18 +3,19 @@ package kirbyandfriends.render;
 import org.lwjgl.opengl.GL11;
 
 import kirbyandfriends.KirbyMod;
-import kirbyandfriends.entities.EntityCreepy;
+import kirbyandfriends.entities.EntityWaddleDee;
+import kirbyandfriends.entities.ModelKirby;
 import kirbyandfriends.entities.ModelWaddleDee;
 import net.minecraft.client.renderer.entity.RenderLiving;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.util.ResourceLocation;
 
-public class RenderCreepy extends RenderLiving {
+public class RenderWaddleDoo extends RenderLiving {
 	
 	
 	
-	   private static final ResourceLocation Creepy= new ResourceLocation(KirbyMod.modid + ":textures/entities/CreepyKirby.png");
+	   private static final ResourceLocation Dee= new ResourceLocation(KirbyMod.modid + ":textures/entities/Waddle_Doo.png");
 
 	  
 	   
@@ -35,14 +36,14 @@ public class RenderCreepy extends RenderLiving {
 	  
 
 	   
-	    public RenderCreepy(ModelWaddleDee modelWaddleDee, float par2)
+	    public RenderWaddleDoo(ModelWaddleDee modelWaddleDee, float par2)
 	    {
 	        super(modelWaddleDee, par2);
 	        
 	    }
 	    
 	   
-	    protected void preRenderCallback(EntityCreepy kirby, float size)
+	    protected void preRenderCallback(EntityWaddleDee kirby, float size)
 	    {
 	        GL11.glScalef(0.5f, 0.5f, 0.5f);
 	    }
@@ -50,12 +51,12 @@ public class RenderCreepy extends RenderLiving {
 	  
 	    protected void preRenderCallback(EntityLivingBase entity, float size)
 	    {
-	        this.preRenderCallback((EntityCreepy)entity, size);
+	        this.preRenderCallback((EntityWaddleDee)entity, size);
 	    }
 	    
-	    protected ResourceLocation getEntityTexture(EntityCreepy kirby)
+	    protected ResourceLocation getEntityTexture(EntityWaddleDee kirby)
 	    {
-	    	return Creepy;
+	    	return Dee;
 
 	    }
 	    
@@ -63,7 +64,7 @@ public class RenderCreepy extends RenderLiving {
 
 	    protected ResourceLocation getEntityTexture(Entity p_110775_1_)
 	    {
-	        return this.getEntityTexture((EntityCreepy)p_110775_1_);
+	        return this.getEntityTexture((EntityWaddleDee)p_110775_1_);
 	    }
 
 

@@ -1,8 +1,11 @@
 package kirbyandfriends.entities;
 
+import org.lwjgl.opengl.GL11;
+
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.model.ModelRenderer;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.util.MathHelper;
 
 public class ModelKirby extends ModelBase
@@ -18,6 +21,7 @@ public class ModelKirby extends ModelBase
     ModelRenderer RightArm;
     ModelRenderer LeftFoot;
     ModelRenderer RightFoot;
+    private float partialTicks;
   
   public ModelKirby()
   {
@@ -86,22 +90,175 @@ public class ModelKirby extends ModelBase
       setRotation(RightFoot, 0F, -0.2974216F, 0F);
   }
   
+  /**
+   * Used for easily adding entity-dependent animations. The second and third float params here are the same second
+   * and third as in the setRotationAngles method.
+   */
+  public void setLivingAnimations(EntityLivingBase p_78086_1_, float p_78086_2_, float p_78086_3_, float p_78086_4_)
+  {
+      this.partialTicks = p_78086_4_;
+  }
+  /**
+   * Sets the models various rotation angles then renders the model.
+   */
   public void render(Entity entity, float f, float f1, float f2, float f3, float f4, float f5)
   {
-    super.render(entity, f, f1, f2, f3, f4, f5);
-    setRotationAngles(f, f1, f2, f3, f4, f5, entity);
-    Body.render(f5);
-    Face.render(f5);
-    Back.render(f5);
-    Left.render(f5);
-    Right.render(f5);
-    Top.render(f5);
-    LeftArm.render(f5);
-    RightArm.render(f5);
-    LeftFoot.render(f5);
-    RightFoot.render(f5);
+      EntityKirby entitykirby = (EntityKirby)entity;
+	     if (entitykirby.isFlying) {
+      GL11.glPushMatrix();
+
+ 
+
+      float f6 = entitykirby.prevAnimTime + (entitykirby.animTime - entitykirby.prevAnimTime) * this.partialTicks;
+      //this.jaw.rotateAngleX = (float)(Math.sin((double)(f6 * (float)Math.PI * 2.0F)) + 1.0D) * 0.2F;
+      float f7 = (float)(Math.sin((double)(f6 * (float)Math.PI * 2.0F - 1.0F)) + 1.0D);
+      f7 = (f7 * f7 * 1.0F + f7 * 2.0F) * 0.05F;
+      GL11.glTranslatef(0.0F, f7 - 2.0F, -3.0F);
+      GL11.glRotatef(f7 * 2.0F, 1.0F, 0.0F, 0.0F);
+      float f8 = -30.0F;
+      float f10 = 0.0F;
+      float f11 = 1.5F;
+      double[] adouble = entitykirby.getMovementOffsets(6, this.partialTicks);
+      float f12 = this.updateRotations(entitykirby.getMovementOffsets(5, this.partialTicks)[0] - entitykirby.getMovementOffsets(10, this.partialTicks)[0]);
+      float f13 = this.updateRotations(entitykirby.getMovementOffsets(5, this.partialTicks)[0] + (double)(f12 / 2.0F));
+      f8 += 2.0F;
+      float f14 = f6 * (float)Math.PI * 2.0F;
+      f8 = 20.0F;
+      float f9 = -12.0F;
+      float f15;
+
+   
+          double[] adouble1 = entitykirby.getMovementOffsets(5, this.partialTicks);
+          f15 = (float)Math.cos((double)(0.45F + f14)) * 0.15F;
+    /*      this.Body.rotateAngleY = this.updateRotations(adouble1[0] - adouble[0]) * (float)Math.PI / 180.0F * f11;
+          this.Body.rotateAngleX = f15 + (float)(adouble1[1] - adouble[1]) * (float)Math.PI / 180.0F * f11 * 5.0F;
+          this.Body.rotateAngleZ = -this.updateRotations(adouble1[0] - (double)f13) * (float)Math.PI / 180.0F * f11;
+          this.Body.rotationPointY = f8;
+          this.Body.rotationPointZ = f9;
+          this.Body.rotationPointX = f10;*/
+          f8 = (float)((double)f8 + Math.sin((double)this.Body.rotateAngleX) * 10.0D);
+          f9 = (float)((double)f9 - Math.cos((double)this.Body.rotateAngleY) * Math.cos((double)this.Body.rotateAngleX) * 10.0D);
+          f10 = (float)((double)f10 - Math.sin((double)this.Body.rotateAngleY) * Math.cos((double)this.Body.rotateAngleX) * 10.0D);
+          //this.Body.render(f5);
+
+    /*  double[] adouble2 = entitykirby.getMovementOffsets(0, this.partialTicks);
+      
+     this.Body.rotationPointY = f8;
+      this.Body.rotationPointZ = f9;
+      this.Body.rotationPointX = f10;
+    
+      this.Body.rotateAngleY = this.updateRotations(adouble2[0] - adouble[0]) * (float)Math.PI / 180.0F * 1.0F;
+      this.Body.rotateAngleZ = -this.updateRotations(adouble2[0] - (double)f13) * (float)Math.PI / 180.0F * 1.0F;*/
+      //this.Body.render(f5);
+      GL11.glPushMatrix();
+      GL11.glTranslatef(0.0F, 1.0F, 0.0F);
+      GL11.glRotatef(-f12 * f11 * 1.0F, 0.0F, 0.0F, 1.0F);
+      GL11.glTranslatef(0.0F, -1.0F, 0.0F);
+      this.Body.rotateAngleZ = 0.0F;
+
+      
+         GL11.glEnable(GL11.GL_CULL_FACE);
+          f15 = f6 * (float)Math.PI * 2.0F;
+          this.LeftArm.rotateAngleX = 0.125F - (float)Math.cos((double)f15) * 0.2F;
+          this.LeftArm.rotateAngleY = 0.25F;
+          this.LeftArm.rotateAngleZ = (float)(Math.sin((double)f15) + 0.125D) * 0.8F;
+         // this.wingTip.rotateAngleZ = -((float)(Math.sin((double)(f15 + 2.0F)) + 0.5D)) * 0.75F;
+         // this.rearLeg.rotateAngleX = 1.0F + f7 * 0.1F;
+         // this.rearLegTip.rotateAngleX = 0.5F + f7 * 0.1F;
+          this.RightFoot.rotateAngleX = 0.75F + f7 * 0.1F;
+         //this.frontLeg.rotateAngleX = 1.3F + f7 * 0.1F;
+         // this.frontLegTip.rotateAngleX = -0.5F - f7 * 0.1F;
+          this.LeftFoot.rotateAngleX = 0.75F + f7 * 0.1F;
+         // this.LeftArm.render(f5);
+         // this.frontLeg.render(f5);
+         // this.rearLeg.render(f5);
+          GL11.glScalef(-1.0F, 1.0F, 1.0F);
+          GL11.glRotatef(90F, 0.0F, 1.0F, 0.0F);
+
+      GL11.glPopMatrix();
+    GL11.glCullFace(GL11.GL_BACK);
+      GL11.glDisable(GL11.GL_CULL_FACE);
+      float f16 = -((float)Math.sin((double)(f6 * (float)Math.PI * 2.0F))) * 0.0F;
+      f14 = f6 * (float)Math.PI * 2.0F;
+      f8 = 10.0F;
+      f9 = 60.0F;
+      f10 = 0.0F;
+      adouble = entitykirby.getMovementOffsets(11, this.partialTicks);
+
+   
+          /*adouble2 = entitykirby.getMovementOffsets(12, this.partialTicks);
+          f16 = (float)((double)f16 + Math.sin((double)(0.45F + f14)) * 0.05000000074505806D);
+          this.Body.rotateAngleY = (this.updateRotations(adouble2[0] - adouble[0]) * f11 + 180.0F) * (float)Math.PI / 180.0F;
+          this.Body.rotateAngleX = f16 + (float)(adouble2[1] - adouble[1]) * (float)Math.PI / 180.0F * f11 * 5.0F;
+          this.Body.rotateAngleZ = this.updateRotations(adouble2[0] - (double)f13) * (float)Math.PI / 180.0F * f11;
+          this.Body.rotationPointY = f8;
+          this.Body.rotationPointZ = f9;
+          this.Body.rotationPointX = f10;*/
+          f8 = (float)((double)f8 + Math.sin((double)this.Body.rotateAngleX) * 10.0D);
+          f9 = (float)((double)f9 - Math.cos((double)this.Body.rotateAngleY) * Math.cos((double)this.Body.rotateAngleX) * 10.0D);
+          f10 = (float)((double)f10 - Math.sin((double)this.Body.rotateAngleY) * Math.cos((double)this.Body.rotateAngleX) * 10.0D); 
+          this.Body.render(f5);
+          this.Face.render(f5);
+          this.Back.render(f5);
+          this.Left.render(f5);
+          this.Right.render(f5);
+          this.Top.render(f5);
+          this.LeftArm.render(f5);
+          this.RightArm.render(f5);
+          this.LeftFoot.render(f5);
+          this.RightFoot.render(f5);
+
+      GL11.glPopMatrix();
+      }
+      else {
+    	    super.render(entity, f, f1, f2, f3, f4, f5);
+    	    setRotationAngles(f, f1, f2, f3, f4, f5, entity);
+    	    Body.render(f5);
+    	    Face.render(f5);
+    	    Back.render(f5);
+    	    Left.render(f5);
+    	    Right.render(f5);
+    	    Top.render(f5);
+    	    LeftArm.render(f5);
+    	    RightArm.render(f5);
+    	    LeftFoot.render(f5);
+    	    RightFoot.render(f5);
+      }
+      
+  }
+
+  
+  
+  
+  /**
+   * Updates the rotations in the parameters for rotations greater than 180 degrees or less than -180 degrees. It adds
+   * or subtracts 360 degrees, so that the appearance is the same, although the numbers are then simplified to range -
+   * 180 to 180
+   */
+  private float updateRotations(double p_78214_1_)
+  {
+      while (p_78214_1_ >= 180.0D)
+      {
+          p_78214_1_ -= 360.0D;
+      }
+
+      while (p_78214_1_ < -180.0D)
+      {
+          p_78214_1_ += 360.0D;
+      }
+
+      return (float)p_78214_1_;
   }
   
+  
+  
+
+  
+/*  public void render(Entity entity, float f, float f1, float f2, float f3, float f4, float f5)
+  {
+
+  }
+*/
   private void setRotation(ModelRenderer model, float x, float y, float z)
   {
     model.rotateAngleX = x;

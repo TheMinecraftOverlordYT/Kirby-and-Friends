@@ -6,14 +6,17 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Set;
 
-import kirbyandfriends.entities.EntityCreepy;
+import kirbyandfriends.KirbyMod;
+import kirbyandfriends.entities.EntityBlipper;
+import kirbyandfriends.entities.EntityDedede;
 import kirbyandfriends.entities.EntityKirby;
+import kirbyandfriends.entities.EntityWaddleDee;
+import kirbyandfriends.entities.EntityWaddleDoo;
+import kirbyandfriends.entities.EntityWispy;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.item.EntityItem;
-import net.minecraft.entity.monster.EntityCreeper;
 import net.minecraft.entity.monster.EntityMob;
-import net.minecraft.entity.monster.EntitySkeleton;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.stats.StatBase;
 import net.minecraft.world.World;
@@ -233,7 +236,12 @@ public class CustomEntityList
    	 addMapping(EntityItem.class, "Item", 1);
    	 addMapping(EntityLiving.class, "Mob", 48);
    	 addMapping(EntityMob.class, "Monster", 49);
-   	addMapping(EntityKirby.class, "Kirby", 401,15771042 , 14377823);
+   	addMapping(EntityKirby.class, "Kirby", 401,KirbyMod.KirbyPhoneColor,  14377823);
+ 	addMapping(EntityWaddleDee.class, "Waddle Dee", 400,15771042 , 14377823);
+ 	addMapping(EntityDedede.class, "Dedede", 403,15771042 , 14377823);
+ 	addMapping(EntityBlipper.class, "Blipper", 404,15771042 , 14377823);
+	addMapping(EntityWispy.class, "Wispy", 415,15771042 , 14377823);
+    addMapping(EntityWaddleDoo.class, "Waddle Doo", 416, KirbyMod.WaddleDooPhoneColor, 14377823);
     }
 
     public static class MyEntityEggInfo
@@ -246,7 +254,6 @@ public class CustomEntityList
             public final int secondaryColor;
             public final StatBase field_151512_d;
             public final StatBase field_151513_e;
-            private static final String __OBFID = "CL_00001539";
 
             public MyEntityEggInfo(int p_i1583_1_, int p_i1583_2_, int p_i1583_3_)
             {

@@ -11,6 +11,7 @@ import net.minecraft.util.ResourceLocation;
 
 	public class RenderKirbyPaletteA extends RenderLiving {
 		
+		EntityKirby kirby;
 		
 		    public RenderKirbyPaletteA(ModelKirby par1ModelBase, float par2)
 		    {
@@ -22,6 +23,8 @@ import net.minecraft.util.ResourceLocation;
 		    protected void preRenderCallback(EntityKirby kirby, float size)
 		    {
 		        GL11.glScalef(0.5f, 0.5f, 0.5f);
+		        if(kirby.isFlying)
+		        GL11.glRotatef(-180F, 0, 1, 0);
 		    }
 		    
 		  

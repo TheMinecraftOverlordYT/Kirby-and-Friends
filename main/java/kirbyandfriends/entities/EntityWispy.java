@@ -1,13 +1,12 @@
 package kirbyandfriends.entities;
 
+import com.google.common.base.Predicate;
+
 import net.minecraft.block.Block;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.Entity;
-<<<<<<< HEAD
 import net.minecraft.entity.EntityLiving;
-=======
->>>>>>> origin/master
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.EnumCreatureAttribute;
 import net.minecraft.entity.IRangedAttackMob;
@@ -26,18 +25,14 @@ import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.stats.AchievementList;
+import net.minecraft.util.BlockPos;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
 
 public class EntityWispy extends EntityMob implements IRangedAttackMob
 {
-<<<<<<< HEAD
-=======
-    private EntityAIArrowAttack aiArrowAttack = new EntityAIArrowAttack(this, 1.0D, 20, 60, 15.0F);
-    private EntityAIAttackOnCollide aiAttackOnCollide = new EntityAIAttackOnCollide(this, EntityPlayer.class, 1.2D, false);
->>>>>>> origin/master
-    
+			 
     public EntityWispy(World p_i1741_1_)
     {
         super(p_i1741_1_);
@@ -46,20 +41,12 @@ public class EntityWispy extends EntityMob implements IRangedAttackMob
         this.tasks.addTask(6, new EntityAIWatchClosest(this, EntityPlayer.class, 8.0F));
         this.tasks.addTask(6, new EntityAILookIdle(this));
         this.targetTasks.addTask(1, new EntityAIHurtByTarget(this, false));
-        this.targetTasks.addTask(2, new EntityAINearestAttackableTarget(this, EntityPlayer.class, 0, true));
-        this.targetTasks.addTask(2, new EntityAINearestAttackableTarget(this, EntityKirby.class, 0, true));
-<<<<<<< HEAD
+        this.targetTasks.addTask(2, new EntityAINearestAttackableTarget(this, EntityPlayer.class, true));
+        this.targetTasks.addTask(2, new EntityAINearestAttackableTarget(this, EntityKirby.class, true));
     	this.tasks.addTask(1, new EntityAIArrowAttack(this, 1.25D, 20, 10.0F));
-		this.targetTasks.addTask(1, new EntityAINearestAttackableTarget(this, EntityLiving.class, 0, true));
+		this.targetTasks.addTask(1, new EntityAINearestAttackableTarget(this, EntityLiving.class, true));
 		this.targetTasks.addTask(1,new EntityAIAttackOnCollide(this, EntityPlayer.class, 1.2D, false));
 		
-=======
-        
-        if (p_i1741_1_ != null && !p_i1741_1_.isRemote)
-        {
-            this.setCombatTask();
-        }
->>>>>>> origin/master
     }
 
     protected void applyEntityAttributes()
@@ -142,7 +129,10 @@ public class EntityWispy extends EntityMob implements IRangedAttackMob
         {
             float f = this.getBrightness(1.0F);
 
-            if (f > 0.5F && this.rand.nextFloat() * 30.0F < (f - 0.4F) * 2.0F && this.worldObj.canBlockSeeTheSky(MathHelper.floor_double(this.posX), MathHelper.floor_double(this.posY), MathHelper.floor_double(this.posZ)))
+            BlockPos blockpos = new BlockPos(this.posX, this.posY, this.posZ);
+
+            
+            if (f > 0.5F && this.rand.nextFloat() * 30.0F < (f - 0.4F) * 2.0F && this.worldObj.canSeeSky(blockpos))
             {
                 boolean flag = true;
                 ItemStack itemstack = this.getEquipmentInSlot(4);
@@ -151,9 +141,9 @@ public class EntityWispy extends EntityMob implements IRangedAttackMob
                 {
                     if (itemstack.isItemStackDamageable())
                     {
-                        itemstack.setItemDamage(itemstack.getItemDamageForDisplay() + this.rand.nextInt(2));
+                        itemstack.setItemDamage(itemstack.getItemDamage() + this.rand.nextInt(2));
 
-                        if (itemstack.getItemDamageForDisplay() >= itemstack.getMaxDamage())
+                        if (itemstack.getItemDamage() >= itemstack.getMaxDamage())
                         {
                             this.renderBrokenItemStack(itemstack);
                             this.setCurrentItemOrArmor(4, (ItemStack)null);
@@ -192,7 +182,7 @@ public class EntityWispy extends EntityMob implements IRangedAttackMob
 
     protected Item getDropItem()
     {
-        return Items.arrow;
+        return Items.apple;
     }
 
     /**
@@ -229,37 +219,8 @@ public class EntityWispy extends EntityMob implements IRangedAttackMob
         }
     }
     
-<<<<<<< HEAD
     
     
-=======
-    protected void addRandomArmor()
-    {
-        super.addRandomArmor();
-        this.setCurrentItemOrArmor(0, new ItemStack(Items.bow));
-    }
-    
-    
-    
-    /**
-     * sets this entity's combat AI.
-     */
-    public void setCombatTask()
-    {
-        this.tasks.removeTask(this.aiAttackOnCollide);
-        this.tasks.removeTask(this.aiArrowAttack);
-        ItemStack itemstack = this.getHeldItem();
-
-        if (itemstack != null && itemstack.getItem() == Items.bow)
-        {
-            this.tasks.addTask(4, this.aiArrowAttack);
-        }
-        else
-        {
-            this.tasks.addTask(4, this.aiAttackOnCollide);
-        }
-    }
->>>>>>> origin/master
 
     /**
      * Attack the specified entity using a ranged attack.

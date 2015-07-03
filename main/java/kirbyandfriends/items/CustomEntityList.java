@@ -6,10 +6,7 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Set;
 
-<<<<<<< HEAD
 import kirbyandfriends.KirbyMod;
-=======
->>>>>>> origin/master
 import kirbyandfriends.entities.EntityBlipper;
 import kirbyandfriends.entities.EntityDedede;
 import kirbyandfriends.entities.EntityKirby;
@@ -23,12 +20,11 @@ import net.minecraft.entity.monster.EntityMob;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.stats.StatBase;
 import net.minecraft.world.World;
+import net.minecraftforge.fml.common.FMLLog;
 
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-
-import cpw.mods.fml.common.FMLLog;
 
 public class CustomEntityList
 {
@@ -239,20 +235,12 @@ public class CustomEntityList
    	 addMapping(EntityItem.class, "Item", 1);
    	 addMapping(EntityLiving.class, "Mob", 48);
    	 addMapping(EntityMob.class, "Monster", 49);
-<<<<<<< HEAD
    	addMapping(EntityKirby.class, "Kirby", 401,KirbyMod.KirbyPhoneColor,  14377823);
-=======
-   	addMapping(EntityKirby.class, "Kirby", 401,15771042 , 14377823);
->>>>>>> origin/master
  	addMapping(EntityWaddleDee.class, "Waddle Dee", 400,15771042 , 14377823);
- 	addMapping(EntityDedede.class, "Dedede", 403,15771042 , 14377823);
+ 	//addMapping(EntityDedede.class, "Dedede", 403,15771042 , 14377823);
  	addMapping(EntityBlipper.class, "Blipper", 404,15771042 , 14377823);
 	addMapping(EntityWispy.class, "Wispy", 415,15771042 , 14377823);
-<<<<<<< HEAD
     addMapping(EntityWaddleDoo.class, "Waddle Doo", 416, KirbyMod.WaddleDooPhoneColor, 14377823);
-=======
-    addMapping(EntityWaddleDoo.class, "Waddle Doo", 416, 1511121, 14377823);
->>>>>>> origin/master
     }
 
     public static class MyEntityEggInfo

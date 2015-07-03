@@ -1,17 +1,30 @@
 package kirbyandfriends.entities;
 
 import net.minecraft.block.material.Material;
+import net.minecraft.entity.EntityLiving;
+import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.IRangedAttackMob;
 import net.minecraft.entity.SharedMonsterAttributes;
+import net.minecraft.entity.ai.EntityAIArrowAttack;
 import net.minecraft.entity.ai.EntityAIAttackOnCollide;
+import net.minecraft.entity.ai.EntityAIBase;
+import net.minecraft.entity.ai.EntityAIHurtByTarget;
 import net.minecraft.entity.ai.EntityAILeapAtTarget;
+import net.minecraft.entity.ai.EntityAILookIdle;
+import net.minecraft.entity.ai.EntityAINearestAttackableTarget;
+import net.minecraft.entity.ai.EntityAISwimming;
+import net.minecraft.entity.ai.EntityAIWander;
+import net.minecraft.entity.ai.EntityAIWatchClosest;
+import net.minecraft.entity.passive.EntitySquid;
 import net.minecraft.entity.passive.EntityWaterMob;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
 
-public class EntityBlipper extends EntityWaterMob
+public class EntityBlipper extends EntityWaterMob implements IRangedAttackMob
 {
     public float squidPitch;
     public float prevSquidPitch;
@@ -32,6 +45,7 @@ public class EntityBlipper extends EntityWaterMob
     private float randomMotionVecX;
     private float randomMotionVecY;
     private float randomMotionVecZ;
+    
 
     public EntityBlipper(World p_i1693_1_)
     {
@@ -39,7 +53,23 @@ public class EntityBlipper extends EntityWaterMob
         this.setSize(0.95F, 0.95F);
         this.rotationVelocity = 1.0F / (this.rand.nextFloat() + 1.0F) * 0.2F;
         this.tasks.addTask(3, new EntityAILeapAtTarget(this, 0.4F));
-        this.tasks.addTask(4, new EntityAIAttackOnCollide(this, 1.0D, true));
+        this.tasks.addTask(0, new EntityAISwimming(this));
+        this.tasks.addTask(2, new EntityAIAttackOnCollide(this, EntityPlayer.class, 1.0D, false));
+        this.tasks.addTask(2, this.field_175455_a);
+    	this.tasks.addTask(1, new EntityAIArrowAttack(this, 1.25D, 20, 10.0F));
+		this.targetTasks.addTask(1, new EntityAINearestAttackableTarget(this, EntityLiving.class, 0, true));
+		this.tasks.addTask(1, new EntityAISwimming(this));
+		this.tasks.addTask(2, new EntityAIAttackOnCollide(this, EntityLiving.class, 1.2D, false));
+		this.tasks.addTask(3, new EntityAIWander(this, 1.0D));
+		this.tasks.addTask(4, new EntityAIWatchClosest(this, EntityLiving.class, 8.0F));
+		this.tasks.addTask(5, new EntityAILookIdle(this));
+		this.tasks.addTask(1, new EntityAIArrowAttack(this, 1.25D, 20, 10.0F));
+		this.targetTasks.addTask(1, new EntityAIHurtByTarget(this, false));
+		this.targetTasks.addTask(2, new EntityAINearestAttackableTarget(this, EntityLiving.class, 0, true));
+		 this.setSize(0.95F, 0.95F);
+	     this.rand.setSeed((long)(1 + this.getEntityId()));
+	     this.rotationVelocity = 1.0F / (this.rand.nextFloat() + 1.0F) * 0.2F;
+	     this.tasks.addTask(0, new EntityBlipper.AIMoveRandom());
     }
 
     protected void applyEntityAttributes()
@@ -114,7 +144,7 @@ public class EntityBlipper extends EntityWaterMob
      */
     public boolean isInWater()
     {
-        return this.worldObj.handleMaterialAcceleration(this.boundingBox.expand(0.0D, -0.6000000238418579D, 0.0D), Material.water, this);
+        return this.worldObj.handleMaterialAcceleration(this.getBoundingBox().expand(0.0D, -0.6000000238418579D, 0.0D), Material.water, this);
     }
 
     /**
@@ -203,30 +233,22 @@ public class EntityBlipper extends EntityWaterMob
         this.moveEntity(this.motionX, this.motionY, this.motionZ);
     }
 
-    protected void updateEntityActionState()
-    {
-        ++this.entityAge;
-
-        if (this.entityAge > 100)
-        {
-            this.randomMotionVecX = this.randomMotionVecY = this.randomMotionVecZ = 0.0F;
-        }
-        else if (this.rand.nextInt(50) == 0 || !this.inWater || this.randomMotionVecX == 0.0F && this.randomMotionVecY == 0.0F && this.randomMotionVecZ == 0.0F)
-        {
-            float f = this.rand.nextFloat() * (float)Math.PI * 2.0F;
-            this.randomMotionVecX = MathHelper.cos(f) * 0.2F;
-            this.randomMotionVecY = -0.1F + this.rand.nextFloat() * 0.2F;
-            this.randomMotionVecZ = MathHelper.sin(f) * 0.2F;
-        }
-
-        this.despawnEntity();
-    }
-
     public boolean canBreatheUnderwater()
     {
         return true;
     }
     
+    public void func_175568_b(float p_175568_1_, float p_175568_2_, float p_175568_3_)
+    {
+        this.randomMotionVecX = p_175568_1_;
+        this.randomMotionVecY = p_175568_2_;
+        this.randomMotionVecZ = p_175568_3_;
+    }
+
+    public boolean func_175567_n()
+    {
+        return this.randomMotionVecX != 0.0F || this.randomMotionVecY != 0.0F || this.randomMotionVecZ != 0.0F;
+    }
     
     /**
      * Checks if the entity's current position is a valid location to spawn this entity.
@@ -235,4 +257,45 @@ public class EntityBlipper extends EntityWaterMob
     {
         return this.posY > 45.0D && this.posY < 63.0D && super.getCanSpawnHere();
     }
-}
+
+	@Override
+	public void attackEntityWithRangedAttack(EntityLivingBase par1EntityLivingBase, float par2) {
+		EntityWaterSpit entitylaser = new EntityWaterSpit(this.worldObj, this);
+        double d0 = par1EntityLivingBase.posX - this.posX;
+        double d1 = par1EntityLivingBase.posY + (double)par1EntityLivingBase.getEyeHeight() - 1.100000023841858D - entitylaser.posY;
+        double d2 = par1EntityLivingBase.posZ - this.posZ;
+        float f1 = MathHelper.sqrt_double(d0 * d0 + d2 * d2) * 0.2F;
+        entitylaser.setThrowableHeading(d0, d1 + (double)f1, d2, 1.6F, 12.0F);
+        this.playSound("random.bow", 1.0F, 1.0F / (this.getRNG().nextFloat() * 0.4F + 0.8F));
+        this.worldObj.spawnEntityInWorld(entitylaser);
+		
+	}
+	
+	  class AIMoveRandom extends EntityAIBase
+	    {
+	        private EntityBlipper field_179476_a = EntityBlipper.this;
+
+	        public boolean shouldExecute()
+	        {
+	            return true;
+	        }
+
+	        public void updateTask()
+	        {
+	            int i = this.field_179476_a.getAge();
+
+	            if (i > 100)
+	            {
+	                this.field_179476_a.func_175568_b(0.0F, 0.0F, 0.0F);
+	            }
+	            else if (this.field_179476_a.getRNG().nextInt(50) == 0 || !this.field_179476_a.inWater || !this.field_179476_a.func_175567_n())
+	            {
+	                float f = this.field_179476_a.getRNG().nextFloat() * (float)Math.PI * 2.0F;
+	                float f1 = MathHelper.cos(f) * 0.2F;
+	                float f2 = -0.1F + this.field_179476_a.getRNG().nextFloat() * 0.2F;
+	                float f3 = MathHelper.sin(f) * 0.2F;
+	                this.field_179476_a.func_175568_b(f1, f2, f3);
+	            }
+	        }
+	    }
+	}

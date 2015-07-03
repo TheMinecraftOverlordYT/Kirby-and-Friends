@@ -5,21 +5,16 @@ import java.util.IdentityHashMap;
 import kirbyandfriends.KirbyMod;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityAgeable;
 import net.minecraft.entity.SharedMonsterAttributes;
-<<<<<<< HEAD
 import net.minecraft.entity.ai.EntityAIAttackOnCollide;
 import net.minecraft.entity.ai.EntityAIFollowParent;
 import net.minecraft.entity.ai.EntityAIHurtByTarget;
 import net.minecraft.entity.ai.EntityAILookIdle;
 import net.minecraft.entity.ai.EntityAIMate;
 import net.minecraft.entity.ai.EntityAINearestAttackableTarget;
-=======
-import net.minecraft.entity.ai.EntityAIFollowParent;
-import net.minecraft.entity.ai.EntityAILookIdle;
-import net.minecraft.entity.ai.EntityAIMate;
->>>>>>> origin/master
 import net.minecraft.entity.ai.EntityAIPanic;
 import net.minecraft.entity.ai.EntityAISwimming;
 import net.minecraft.entity.ai.EntityAITempt;
@@ -29,14 +24,13 @@ import net.minecraft.entity.ai.attributes.IAttribute;
 import net.minecraft.entity.ai.attributes.RangedAttribute;
 import net.minecraft.entity.passive.EntityAnimal;
 import net.minecraft.entity.player.EntityPlayer;
-<<<<<<< HEAD
 import net.minecraft.init.Blocks;
-=======
->>>>>>> origin/master
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.pathfinding.PathNavigateGround;
+import net.minecraft.util.BlockPos;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
 
@@ -46,7 +40,7 @@ public class EntityWaddleDee extends EntityAnimal{
 	public EntityWaddleDoo entitywaddledoo;
 	
 	
-	 private static final IAttribute waddleJumpStrength = (new RangedAttribute("waddle.jumpStrength", 0.7D, 0.0D, 2.0D)).setDescription("Jump Strength").setShouldWatch(true);
+	  private static final IAttribute waddleJumpStrength = (new RangedAttribute((IAttribute)null, "waddle.jumpStrength", 0.7D, 0.0D, 2.0D)).setDescription("Jump Strength").setShouldWatch(true);
 	    protected boolean waddleJumping;
 	    protected float jumpPower;
 	    private int jumpRearingCounter;
@@ -56,7 +50,7 @@ public class EntityWaddleDee extends EntityAnimal{
 	public EntityWaddleDee(World world) {
 		super(world);
 	     this.setSize(0.9F, 1.3F);
-	      this.getNavigator().setAvoidsWater(true);
+	     ((PathNavigateGround)this.getNavigator()).func_179690_a(true);
 	      this.tasks.addTask(0, new EntityAISwimming(this));
 	      this.tasks.addTask(1, new EntityAIPanic(this, 1.25D));
 	       this.tasks.addTask(2, new EntityAIMate(this, 1.0D));
@@ -65,7 +59,6 @@ public class EntityWaddleDee extends EntityAnimal{
 	        this.tasks.addTask(6, new EntityAIWander(this, 1.0D));
 	        this.tasks.addTask(7, new EntityAIWatchClosest(this, EntityPlayer.class, 6.0F));
 	        this.tasks.addTask(8, new EntityAILookIdle(this));
-<<<<<<< HEAD
 	        this.tasks.addTask(1, new EntityAISwimming(this));
 	        this.tasks.addTask(2, new EntityAIAttackOnCollide(this, EntityPlayer.class, 1.2D, false));
 	        this.tasks.addTask(3, new EntityAIWander(this, 1.0D));
@@ -73,10 +66,8 @@ public class EntityWaddleDee extends EntityAnimal{
 	        this.tasks.addTask(5, new EntityAILookIdle(this));
 
 	        this.targetTasks.addTask(1, new EntityAIHurtByTarget(this, false));
-	        this.targetTasks.addTask(2, new EntityAINearestAttackableTarget(this, EntityPlayer.class, 0, true));
-	        this.targetTasks.addTask(2, new EntityAINearestAttackableTarget(this, EntityKirby.class, 0, true));
-=======
->>>>>>> origin/master
+	        this.targetTasks.addTask(2, new EntityAINearestAttackableTarget(this, EntityPlayer.class, true));
+	        this.targetTasks.addTask(2, new EntityAINearestAttackableTarget(this, EntityKirby.class, true));
 	}
 
     public boolean isWaddleJumping()
@@ -227,10 +218,7 @@ public class EntityWaddleDee extends EntityAnimal{
 	    
 	 public void onLivingUpdate(){
 		  
-<<<<<<< HEAD
 		 super.onLivingUpdate();
-=======
->>>>>>> origin/master
 	        int k;
 
 	        if (!this.worldObj.isRemote && this.jumpRearingCounter > 0 && ++this.jumpRearingCounter > 20)
@@ -245,7 +233,7 @@ public class EntityWaddleDee extends EntityAnimal{
 	        {
 	            int i;
 	            int j;
-	            Block block;
+	     
 
 	            if (this.func_146080_bZ().getMaterial() == Material.air)
 	            {
@@ -254,18 +242,15 @@ public class EntityWaddleDee extends EntityAnimal{
 	                    k = MathHelper.floor_double(this.posX - 2.0D + this.rand.nextDouble() * 4.0D);
 	                    i = MathHelper.floor_double(this.posY + this.rand.nextDouble() * 3.0D);
 	                    j = MathHelper.floor_double(this.posZ - 2.0D + this.rand.nextDouble() * 4.0D);
-	                    block = this.worldObj.getBlock(k, i, j);
-
+	                    BlockPos blockpos = new BlockPos(this.posX,this.posY,this.posZ); 
+	                  Block block = this.worldObj.getBlockState(blockpos).getBlock();
+	                   
 	               //     if (EntityWaddleDee.getCarriable(block))
 	               //     {
 	                        this.func_146081_a(block);
 	                     ///   this.setCarryingData(this.worldObj.getBlockMetadata(k, i, j));
-<<<<<<< HEAD
 	                       // this.worldObj.setBlock(k, i, j, KirbyMod.DreamBlock);
 
-=======
-	                        this.worldObj.setBlock(k, i, j, KirbyMod.DreamBlock);
->>>>>>> origin/master
 	                    }
 	                
 	            else if (this.rand.nextInt(2000) == 0)
@@ -273,17 +258,15 @@ public class EntityWaddleDee extends EntityAnimal{
 	                k = MathHelper.floor_double(this.posX - 1.0D + this.rand.nextDouble() * 2.0D);
 	                i = MathHelper.floor_double(this.posY + this.rand.nextDouble() * 2.0D);
 	                j = MathHelper.floor_double(this.posZ - 1.0D + this.rand.nextDouble() * 2.0D);
-	                block = this.worldObj.getBlock(k, i, j);
-	                Block block1 = this.worldObj.getBlock(k, i - 1, j);
+	                BlockPos blockpos = new BlockPos(this.posX,this.posY,this.posZ); 
+	                Block block = this.worldObj.getBlockState(blockpos).getBlock();
+	               BlockPos blockpos1 = new BlockPos(this.posX, this.posY - 1, this.posZ);
+	                Block block1 = this.worldObj.getBlockState(blockpos1).getBlock();
 
 	                if (block.getMaterial() == Material.air && block1.getMaterial() == Material.air && block1.renderAsNormalBlock())
 	                {
 	               //     this.worldObj.setBlock(k, i, j, this.func_146080_bZ(), this.getCarryingData(), 3);
-<<<<<<< HEAD
 	                    this.func_146081_a(Blocks.air);
-=======
-	                    this.func_146081_a(KirbyMod.DreamBlock);
->>>>>>> origin/master
 	                }
 	            }
 	            else {

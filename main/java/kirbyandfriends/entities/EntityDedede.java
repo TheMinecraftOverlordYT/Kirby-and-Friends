@@ -1,20 +1,11 @@
 package kirbyandfriends.entities;
 
-<<<<<<< HEAD
-=======
-import cpw.mods.fml.common.eventhandler.Event.Result;
->>>>>>> origin/master
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EntityLivingBase;
-<<<<<<< HEAD
-=======
-import net.minecraft.entity.IEntityLivingData;
->>>>>>> origin/master
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.EntityAIAttackOnCollide;
 import net.minecraft.entity.ai.EntityAIHurtByTarget;
@@ -25,13 +16,7 @@ import net.minecraft.entity.ai.EntityAIMoveTowardsTarget;
 import net.minecraft.entity.ai.EntityAINearestAttackableTarget;
 import net.minecraft.entity.ai.EntityAIWander;
 import net.minecraft.entity.ai.EntityAIWatchClosest;
-<<<<<<< HEAD
 import net.minecraft.entity.monster.EntityMob;
-=======
-import net.minecraft.entity.ai.attributes.AttributeModifier;
-import net.minecraft.entity.monster.EntityMob;
-import net.minecraft.entity.monster.EntityZombie;
->>>>>>> origin/master
 import net.minecraft.entity.monster.IMob;
 import net.minecraft.entity.passive.IAnimals;
 import net.minecraft.entity.player.EntityPlayer;
@@ -39,16 +24,14 @@ import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.pathfinding.PathNavigateGround;
+import net.minecraft.util.BlockPos;
 import net.minecraft.util.DamageSource;
+import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.MathHelper;
-<<<<<<< HEAD
 import net.minecraft.world.World;
-=======
-import net.minecraft.world.EnumDifficulty;
-import net.minecraft.world.World;
-import net.minecraftforge.event.ForgeEventFactory;
-import net.minecraftforge.event.entity.living.ZombieEvent.SummonAidEvent;
->>>>>>> origin/master
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 
 
@@ -58,7 +41,7 @@ public class EntityDedede extends EntityMob implements IAnimals
 	public EntityDedede(World world) {
 		super(world);
 	        this.setSize(1.4F, 2.9F);
-	        this.getNavigator().setAvoidsWater(true);
+	        ((PathNavigateGround)this.getNavigator()).func_179690_a(true);
 	        this.tasks.addTask(1, new EntityAIAttackOnCollide(this, 1.0D, true));
 	        this.tasks.addTask(2, new EntityAIMoveTowardsTarget(this, 0.9D, 32.0F));
 	        this.tasks.addTask(3, new EntityAIMoveThroughVillage(this, 0.6D, true));
@@ -67,7 +50,7 @@ public class EntityDedede extends EntityMob implements IAnimals
 	        this.tasks.addTask(7, new EntityAIWatchClosest(this, EntityPlayer.class, 6.0F));
 	        this.tasks.addTask(8, new EntityAILookIdle(this));
 	        this.targetTasks.addTask(2, new EntityAIHurtByTarget(this, false));
-	        this.targetTasks.addTask(3, new EntityAINearestAttackableTarget(this, EntityLiving.class, 0, false));
+	        this.targetTasks.addTask(3, new EntityAINearestAttackableTarget(this, EntityLiving.class, false));
 	    }
 	
 	private int attackTimer;
@@ -150,13 +133,14 @@ public class EntityDedede extends EntityMob implements IAnimals
 	        if (this.motionX * this.motionX + this.motionZ * this.motionZ > 2.500000277905201E-7D && this.rand.nextInt(5) == 0)
 	        {
 	            int i = MathHelper.floor_double(this.posX);
-	            int j = MathHelper.floor_double(this.posY - 0.20000000298023224D - (double)this.yOffset);
+	            int j = MathHelper.floor_double(this.posY - 0.20000000298023224D);
 	            int k = MathHelper.floor_double(this.posZ);
-	            Block block = this.worldObj.getBlock(i, j, k);
-
+	            IBlockState iblockstate = this.worldObj.getBlockState(new BlockPos(i, j, k));
+	            Block block = iblockstate.getBlock();
+	            
 	            if (block.getMaterial() != Material.air)
 	            {
-	                this.worldObj.spawnParticle("blockcrack_" + Block.getIdFromBlock(block) + "_" + this.worldObj.getBlockMetadata(i, j, k), this.posX + ((double)this.rand.nextFloat() - 0.5D) * (double)this.width, this.boundingBox.minY + 0.1D, this.posZ + ((double)this.rand.nextFloat() - 0.5D) * (double)this.width, 4.0D * ((double)this.rand.nextFloat() - 0.5D), 0.5D, ((double)this.rand.nextFloat() - 0.5D) * 4.0D);
+	                this.worldObj.spawnParticle(EnumParticleTypes.BLOCK_CRACK, this.posX + ((double)this.rand.nextFloat() - 0.5D) * (double)this.width, this.getEntityBoundingBox().minY + 0.1D, this.posZ + ((double)this.rand.nextFloat() - 0.5D) * (double)this.width, 4.0D * ((double)this.rand.nextFloat() - 0.5D), 0.5D, ((double)this.rand.nextFloat() - 0.5D) * 4.0D, new int[] {Block.getStateId(iblockstate)});
 	            }
 	        }
 	    }
@@ -254,7 +238,7 @@ public class EntityDedede extends EntityMob implements IAnimals
 
 	        for (k = 0; k < j; ++k)
 	        {
-	            this.func_145778_a(Item.getItemFromBlock(Blocks.red_flower), 1, 0.0F);
+	            this.dropItem(Item.getItemFromBlock(Blocks.red_flower), 1);
 	        }
 
 	        k = 3 + this.rand.nextInt(3);
@@ -265,20 +249,4 @@ public class EntityDedede extends EntityMob implements IAnimals
 	        }
 	    }
 
-<<<<<<< HEAD
-=======
-
-	    /**
-	     * Called when the mob's health reaches 0.
-	     */
-	/*    public void onDeath(DamageSource p_70645_1_)
-	    {
-	        if (this.attackingPlayer != null)
-	        {
-	            this.villageObj.setReputationForPlayer(this.attackingPlayer.getCommandSenderName(), -5);
-	        }
-
-	        super.onDeath(p_70645_1_);
-	    }*/
->>>>>>> origin/master
 }

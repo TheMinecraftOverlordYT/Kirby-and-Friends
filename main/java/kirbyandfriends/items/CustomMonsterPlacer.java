@@ -1,45 +1,47 @@
 package kirbyandfriends.items;
 
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 
 import java.util.Iterator;
 import java.util.List;
-
-import kirbyandfriends.items.CustomEntityList.MyEntityEggInfo;
-import net.minecraft.block.Block;
+import net.minecraft.block.BlockFence;
 import net.minecraft.block.BlockLiquid;
-import net.minecraft.client.renderer.texture.IIconRegister;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityList;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.IEntityLivingData;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.Facing;
-import net.minecraft.util.IIcon;
+import net.minecraft.stats.StatList;
+import net.minecraft.tileentity.MobSpawnerBaseLogic;
+import net.minecraft.tileentity.TileEntity;
+import net.minecraft.tileentity.TileEntityMobSpawner;
+import net.minecraft.util.BlockPos;
+import net.minecraft.util.EnumFacing;
 import net.minecraft.util.MathHelper;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class CustomMonsterPlacer extends Item
 {
-    @SideOnly(Side.CLIENT)
-    private IIcon theIcon;
+    private static final String __OBFID = "CL_00000070";
 
     public CustomMonsterPlacer()
     {
         this.setHasSubtypes(true);
-       // this.setCreativeTab(CreativeTabs.tabMisc);
     }
 
-    public String getItemStackDisplayName(ItemStack p_77653_1_)
+    public String getItemStackDisplayName(ItemStack stack)
     {
         String s = ("" + StatCollector.translateToLocal(this.getUnlocalizedName() + ".name")).trim();
-        String s1 = CustomEntityList.getStringFromID(p_77653_1_.getItemDamage());
+        String s1 = EntityList.getStringFromID(stack.getMetadata());
 
         if (s1 != null)
         {
@@ -50,47 +52,66 @@ public class CustomMonsterPlacer extends Item
     }
 
     @SideOnly(Side.CLIENT)
-    public int getColorFromItemStack(ItemStack p_82790_1_, int p_82790_2_)
+    public int getColorFromItemStack(ItemStack stack, int renderPass)
     {
-        MyEntityEggInfo entityegginfo = (MyEntityEggInfo)CustomEntityList.entityEggs.get(Integer.valueOf(p_82790_1_.getItemDamage()));
-        return entityegginfo != null ? (p_82790_2_ == 0 ? entityegginfo.primaryColor : entityegginfo.secondaryColor) : 16777215;
+        EntityList.EntityEggInfo entityegginfo = (EntityList.EntityEggInfo)EntityList.entityEggs.get(Integer.valueOf(stack.getMetadata()));
+        return entityegginfo != null ? (renderPass == 0 ? entityegginfo.primaryColor : entityegginfo.secondaryColor) : 16777215;
     }
 
-    /**
-     * Callback for item usage. If the item does something special on right clicking, he will have one of those. Return
-     * True if something happen and false if it don't. This is for ITEMS, not BLOCKS
-     */
-   public boolean onItemUse(ItemStack p_77648_1_, EntityPlayer p_77648_2_, World p_77648_3_, int p_77648_4_, int p_77648_5_, int p_77648_6_, int p_77648_7_, float p_77648_8_, float p_77648_9_, float p_77648_10_)
+    public boolean onItemUse(ItemStack stack, EntityPlayer playerIn, World worldIn, BlockPos pos, EnumFacing side, float hitX, float hitY, float hitZ)
     {
-        if (p_77648_3_.isRemote)
+        if (worldIn.isRemote)
         {
             return true;
         }
+        else if (!playerIn.canPlayerEdit(pos.offset(side), side, stack))
+        {
+            return false;
+        }
         else
         {
-            Block block = p_77648_3_.getBlock(p_77648_4_, p_77648_5_, p_77648_6_);
-            p_77648_4_ += Facing.offsetsXForSide[p_77648_7_];
-            p_77648_5_ += Facing.offsetsYForSide[p_77648_7_];
-            p_77648_6_ += Facing.offsetsZForSide[p_77648_7_];
+            IBlockState iblockstate = worldIn.getBlockState(pos);
+
+            if (iblockstate.getBlock() == Blocks.mob_spawner)
+            {
+                TileEntity tileentity = worldIn.getTileEntity(pos);
+
+                if (tileentity instanceof TileEntityMobSpawner)
+                {
+                    MobSpawnerBaseLogic mobspawnerbaselogic = ((TileEntityMobSpawner)tileentity).getSpawnerBaseLogic();
+                    mobspawnerbaselogic.setEntityName(EntityList.getStringFromID(stack.getMetadata()));
+                    tileentity.markDirty();
+                    worldIn.markBlockForUpdate(pos);
+
+                    if (!playerIn.capabilities.isCreativeMode)
+                    {
+                        --stack.stackSize;
+                    }
+
+                    return true;
+                }
+            }
+
+            pos = pos.offset(side);
             double d0 = 0.0D;
 
-            if (p_77648_7_ == 1 && block.getRenderType() == 11)
+            if (side == EnumFacing.UP && iblockstate instanceof BlockFence)
             {
                 d0 = 0.5D;
             }
 
-            Entity entity = spawnCreature(p_77648_3_, p_77648_1_.getItemDamage(), (double)p_77648_4_ + 0.5D, (double)p_77648_5_ + d0, (double)p_77648_6_ + 0.5D);
+            Entity entity = spawnCreature(worldIn, stack.getMetadata(), (double)pos.getX() + 0.5D, (double)pos.getY() + d0, (double)pos.getZ() + 0.5D);
 
             if (entity != null)
             {
-                if (entity instanceof EntityLivingBase && p_77648_1_.hasDisplayName())
+                if (entity instanceof EntityLivingBase && stack.hasDisplayName())
                 {
-                    ((EntityLiving)entity).setCustomNameTag(p_77648_1_.getDisplayName());
+                    entity.setCustomNameTag(stack.getDisplayName());
                 }
 
-                if (!p_77648_2_.capabilities.isCreativeMode)
+                if (!playerIn.capabilities.isCreativeMode)
                 {
-                    --p_77648_1_.stackSize;
+                    --stack.stackSize;
                 }
             }
 
@@ -98,83 +119,65 @@ public class CustomMonsterPlacer extends Item
         }
     }
 
-    
-/*    @Override
-    public boolean onItemUse(ItemStack itemStack, EntityPlayer entityPlayer, World world, int x, int y, int z, int sideHit, float hitVecX, float hitVecY, float hitVecZ) {
-
-        if (!world.isRemote) {
-        	
-        	 Minecraft.getMinecraft().displayGuiScreen(
-                     new GuiOrderForm(entityPlayer)); 
-        }
-        return true;
-    }*/
-    /**
-     * Called whenever this item is equipped and the right mouse button is pressed. Args: itemStack, world, entityPlayer
-     */
-    public ItemStack onItemRightClick(ItemStack p_77659_1_, World p_77659_2_, EntityPlayer p_77659_3_)
+    public ItemStack onItemRightClick(ItemStack itemStackIn, World worldIn, EntityPlayer playerIn)
     {
-        if (p_77659_2_.isRemote)
+        if (worldIn.isRemote)
         {
-            return p_77659_1_;
+            return itemStackIn;
         }
         else
         {
-            MovingObjectPosition movingobjectposition = this.getMovingObjectPositionFromPlayer(p_77659_2_, p_77659_3_, true);
+            MovingObjectPosition movingobjectposition = this.getMovingObjectPositionFromPlayer(worldIn, playerIn, true);
 
             if (movingobjectposition == null)
             {
-                return p_77659_1_;
+                return itemStackIn;
             }
             else
             {
                 if (movingobjectposition.typeOfHit == MovingObjectPosition.MovingObjectType.BLOCK)
                 {
-                    int i = movingobjectposition.blockX;
-                    int j = movingobjectposition.blockY;
-                    int k = movingobjectposition.blockZ;
+                    BlockPos blockpos = movingobjectposition.getBlockPos();
 
-                    if (!p_77659_2_.canMineBlock(p_77659_3_, i, j, k))
+                    if (!worldIn.isBlockModifiable(playerIn, blockpos))
                     {
-                        return p_77659_1_;
+                        return itemStackIn;
                     }
 
-                    if (!p_77659_3_.canPlayerEdit(i, j, k, movingobjectposition.sideHit, p_77659_1_))
+                    if (!playerIn.canPlayerEdit(blockpos, movingobjectposition.sideHit, itemStackIn))
                     {
-                        return p_77659_1_;
+                        return itemStackIn;
                     }
 
-                    if (p_77659_2_.getBlock(i, j, k) instanceof BlockLiquid)
+                    if (worldIn.getBlockState(blockpos).getBlock() instanceof BlockLiquid)
                     {
-                        Entity entity = spawnCreature(p_77659_2_, p_77659_1_.getItemDamage(), (double)i, (double)j, (double)k);
+                        Entity entity = spawnCreature(worldIn, itemStackIn.getMetadata(), (double)blockpos.getX() + 0.5D, (double)blockpos.getY() + 0.5D, (double)blockpos.getZ() + 0.5D);
 
                         if (entity != null)
                         {
-                            if (entity instanceof EntityLivingBase && p_77659_1_.hasDisplayName())
+                            if (entity instanceof EntityLivingBase && itemStackIn.hasDisplayName())
                             {
-                                ((EntityLiving)entity).setCustomNameTag(p_77659_1_.getDisplayName());
+                                ((EntityLiving)entity).setCustomNameTag(itemStackIn.getDisplayName());
                             }
 
-                            if (!p_77659_3_.capabilities.isCreativeMode)
+                            if (!playerIn.capabilities.isCreativeMode)
                             {
-                                --p_77659_1_.stackSize;
+                                --itemStackIn.stackSize;
                             }
+
+                            playerIn.triggerAchievement(StatList.objectUseStats[Item.getIdFromItem(this)]);
                         }
                     }
                 }
 
-                return p_77659_1_;
+                return itemStackIn;
             }
         }
     }
 
-    /*
-     * Spawns the creature specified by the egg's type in the location specified by the last three parameters.
-     * Parameters: world, entityID, x, y, z.
-     */
-    public static Entity spawnCreature(World p_77840_0_, int p_77840_1_, double p_77840_2_, double p_77840_4_, double p_77840_6_)
+    public static Entity spawnCreature(World worldIn, int entityID, double x, double y, double z)
     {
-        if (!CustomEntityList.entityEggs.containsKey(Integer.valueOf(p_77840_1_)))
+        if (!EntityList.entityEggs.containsKey(Integer.valueOf(entityID)))
         {
             return null;
         }
@@ -184,16 +187,16 @@ public class CustomMonsterPlacer extends Item
 
             for (int j = 0; j < 1; ++j)
             {
-                entity = CustomEntityList.createEntityByID(p_77840_1_, p_77840_0_);
+                entity = EntityList.createEntityByID(entityID, worldIn);
 
-                if (entity != null && entity instanceof EntityLivingBase)
+                if (entity instanceof EntityLivingBase)
                 {
                     EntityLiving entityliving = (EntityLiving)entity;
-                    entity.setLocationAndAngles(p_77840_2_, p_77840_4_, p_77840_6_, MathHelper.wrapAngleTo180_float(p_77840_0_.rand.nextFloat() * 360.0F), 0.0F);
+                    entity.setLocationAndAngles(x, y, z, MathHelper.wrapAngleTo180_float(worldIn.rand.nextFloat() * 360.0F), 0.0F);
                     entityliving.rotationYawHead = entityliving.rotationYaw;
                     entityliving.renderYawOffset = entityliving.rotationYaw;
-                    entityliving.onSpawnWithEgg((IEntityLivingData)null);
-                    p_77840_0_.spawnEntityInWorld(entity);
+                    entityliving.func_180482_a(worldIn.getDifficultyForLocation(new BlockPos(entityliving)), (IEntityLivingData)null);
+                    worldIn.spawnEntityInWorld(entity);
                     entityliving.playLivingSound();
                 }
             }
@@ -203,39 +206,14 @@ public class CustomMonsterPlacer extends Item
     }
 
     @SideOnly(Side.CLIENT)
-    public boolean requiresMultipleRenderPasses()
+    public void getSubItems(Item itemIn, CreativeTabs tab, List subItems)
     {
-        return true;
-    }
-
-    /**
-     * Gets an icon index based on an item's damage value and the given render pass
-     */
-    @SideOnly(Side.CLIENT)
-    public IIcon getIconFromDamageForRenderPass(int p_77618_1_, int p_77618_2_)
-    {
-        return p_77618_2_ > 0 ? this.theIcon : super.getIconFromDamageForRenderPass(p_77618_1_, p_77618_2_);
-    }
-
-    /**
-     * returns a list of items with the same ID, but different meta (eg: dye returns 16 items)
-     */
-    @SideOnly(Side.CLIENT)
-    public void getSubItems(Item p_150895_1_, CreativeTabs p_150895_2_, List p_150895_3_)
-    {
-        Iterator iterator = CustomEntityList.entityEggs.values().iterator();
+        Iterator iterator = EntityList.entityEggs.values().iterator();
 
         while (iterator.hasNext())
         {
-            MyEntityEggInfo entityegginfo = (MyEntityEggInfo)iterator.next();
-            p_150895_3_.add(new ItemStack(p_150895_1_, 1, entityegginfo.spawnedID));
+            EntityList.EntityEggInfo entityegginfo = (EntityList.EntityEggInfo)iterator.next();
+            subItems.add(new ItemStack(itemIn, 1, entityegginfo.spawnedID));
         }
-    }
-
-    @SideOnly(Side.CLIENT)
-    public void registerIcons(IIconRegister iconregister)
-    {
-        super.registerIcons(iconregister);
-     this.theIcon = iconregister.registerIcon(this.getIconString() + "_overlay");
     }
 }

@@ -6,6 +6,7 @@ import kirbyandfriends.KirbyMod;
 import kirbyandfriends.entities.EntityBlipper;
 import kirbyandfriends.entities.ModelBlipper;
 import net.minecraft.client.renderer.entity.RenderLiving;
+import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.monster.EntitySlime;
@@ -70,12 +71,12 @@ public class RenderBlipper extends RenderLiving {
 	   
 	   
 
-	  
+	 static RenderManager renderManager;
 
 	   
 	    public RenderBlipper(ModelBlipper modelBlipperKirby, float par2)
 	    {
-	        super(modelBlipperKirby, par2);
+	        super(renderManager, modelBlipperKirby, par2);
 	        
 	    }
 	    

@@ -7,6 +7,7 @@ import kirbyandfriends.entities.EntityWaddleDee;
 import kirbyandfriends.entities.ModelKirby;
 import kirbyandfriends.entities.ModelWaddleDee;
 import net.minecraft.client.renderer.entity.RenderLiving;
+import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.util.ResourceLocation;
@@ -32,13 +33,13 @@ public class RenderWaddleDoo extends RenderLiving {
 //		}
 	   
 	   
-
+	   static RenderManager renderManager; 
 	  
 
 	   
 	    public RenderWaddleDoo(ModelWaddleDee modelWaddleDee, float par2)
 	    {
-	        super(modelWaddleDee, par2);
+	        super(renderManager, modelWaddleDee, par2);
 	        
 	    }
 	    

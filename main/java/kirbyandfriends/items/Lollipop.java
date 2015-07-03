@@ -13,11 +13,7 @@ public class Lollipop extends ItemFood{
 this.setCreativeTab(KirbyMod.tabCustom);
 this.setAlwaysEdible();
 this.setUnlocalizedName("Lollipop");
-this.setTextureName(KirbyMod.modid + ":Lollipop");
-<<<<<<< HEAD
+//this.setTextureName(KirbyMod.modid + ":Lollipop");
 this.setPotionEffect(14,10,100,1.0f);
-=======
-this.setPotionEffect(14,1,100,1.0f);
->>>>>>> origin/master
 	}
 }

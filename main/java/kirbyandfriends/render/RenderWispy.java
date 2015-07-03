@@ -6,6 +6,7 @@ import kirbyandfriends.KirbyMod;
 import kirbyandfriends.entities.EntityWispy;
 import kirbyandfriends.entities.ModelWispy;
 import net.minecraft.client.renderer.entity.RenderLiving;
+import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.util.ResourceLocation;
@@ -16,13 +17,13 @@ public class RenderWispy extends RenderLiving {
 	
 	   private static final ResourceLocation Wispy= new ResourceLocation(KirbyMod.modid + ":textures/entities/wispy.png");
 
-	  
+	 static RenderManager renderManger; 
 	  
 
 	   
 	    public RenderWispy(ModelWispy modelWispyKirby, float par2)
 	    {
-	        super(modelWispyKirby, par2);
+	        super(renderManger, modelWispyKirby, par2);
 	        
 	    }
 	    

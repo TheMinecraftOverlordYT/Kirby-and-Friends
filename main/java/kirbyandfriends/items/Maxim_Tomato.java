@@ -10,7 +10,7 @@ public class Maxim_Tomato extends ItemFood {
 		setCreativeTab(KirbyMod.tabCustom);
 		this.setAlwaysEdible();
 		this.setPotionEffect(6,1,100,1.0f);
-		this.setTextureName(KirbyMod.modid + ":maxim tomato" );
+		//this.setTextureName(KirbyMod.modid + ":maxim tomato" );
 		/*    *//**
 		     * returns the action that specifies what animation to play when the items is being used
 		     *//*

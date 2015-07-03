@@ -5,6 +5,7 @@ package kirbyandfriends.render;
 import kirbyandfriends.entities.EntityKirby;
 import kirbyandfriends.entities.ModelKirby;
 import net.minecraft.client.renderer.entity.RenderLiving;
+import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.util.ResourceLocation;
@@ -12,10 +13,11 @@ import net.minecraft.util.ResourceLocation;
 	public class RenderKirbyPaletteA extends RenderLiving {
 		
 		EntityKirby kirby;
+		static RenderManager renderManager; 
 		
 		    public RenderKirbyPaletteA(ModelKirby par1ModelBase, float par2)
 		    {
-		        super(par1ModelBase, par2);
+		        super(renderManager, par1ModelBase, par2);
 		        
 		    }
 		    
@@ -23,10 +25,7 @@ import net.minecraft.util.ResourceLocation;
 		    protected void preRenderCallback(EntityKirby kirby, float size)
 		    {
 		        GL11.glScalef(0.5f, 0.5f, 0.5f);
-<<<<<<< HEAD
 		        if(kirby.isFlying)
-=======
->>>>>>> origin/master
 		        GL11.glRotatef(-180F, 0, 1, 0);
 		    }
 		    

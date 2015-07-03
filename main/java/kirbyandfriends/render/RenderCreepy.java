@@ -6,6 +6,7 @@ import kirbyandfriends.KirbyMod;
 import kirbyandfriends.entities.EntityCreepy;
 import kirbyandfriends.entities.ModelWaddleDee;
 import net.minecraft.client.renderer.entity.RenderLiving;
+import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.util.ResourceLocation;
@@ -16,7 +17,7 @@ public class RenderCreepy extends RenderLiving {
 	
 	   private static final ResourceLocation Creepy= new ResourceLocation(KirbyMod.modid + ":textures/entities/CreepyKirby.png");
 
-	  
+	  static RenderManager rendermanager; 
 	   
 //	   public ModelBase createRandom() {
 //		   Random r = new Random();
@@ -37,7 +38,7 @@ public class RenderCreepy extends RenderLiving {
 	   
 	    public RenderCreepy(ModelWaddleDee modelWaddleDee, float par2)
 	    {
-	        super(modelWaddleDee, par2);
+	        super(rendermanager, modelWaddleDee, par2);
 	        
 	    }
 	    

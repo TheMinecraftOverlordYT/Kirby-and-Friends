@@ -12,20 +12,20 @@ import net.minecraft.world.World;
 
 
 
-public class EntityThrownWishStar extends EntityThrowable {
+public class EntityWaterSpit extends EntityThrowable {
 
 	private double damage = 2.0D;
 	public int knockbackStrength;
 	
-public EntityThrownWishStar(World world) {
+public EntityWaterSpit(World world) {
 super(world);
 }
 
-public EntityThrownWishStar(World world, EntityLivingBase entity, float par2) {
+public EntityWaterSpit(World world, EntityLivingBase entity) {
 super(world, entity);
 }
 
-public EntityThrownWishStar(World world, double x, double y, double z) {
+public EntityWaterSpit(World world, double x, double y, double z) {
 super(world, x, y, z);
 }
 
@@ -66,7 +66,7 @@ mop.entityHit.attackEntityFrom(DamageSource.causeThrownDamage(this, this.getThro
 
 // spawn 4 "crit" particles at the point of impact
 for (int l = 0; l < 4; ++l) {
-this.worldObj.spawnParticle(EnumParticleTypes.CRIT, this.posX, this.posY, this.posZ, 0.0D, 0.0D, 0.0D);
+this.worldObj.spawnParticle(EnumParticleTypes.WATER_SPLASH, this.posX, this.posY, this.posZ, 0.0D, 0.0D, 0.0D);
 }
 
 

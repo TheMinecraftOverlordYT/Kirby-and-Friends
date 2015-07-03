@@ -2,12 +2,9 @@ package kirbyandfriends.entities;
 
 
 import net.minecraft.entity.EntityLivingBase;
-<<<<<<< HEAD
-=======
-import net.minecraft.entity.IProjectile;
->>>>>>> origin/master
 import net.minecraft.entity.projectile.EntityThrowable;
 import net.minecraft.util.DamageSource;
+import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.world.World;
 
@@ -69,7 +66,7 @@ mop.entityHit.attackEntityFrom(DamageSource.causeThrownDamage(this, this.getThro
 
 // spawn 4 "crit" particles at the point of impact
 for (int l = 0; l < 4; ++l) {
-this.worldObj.spawnParticle("crit", this.posX, this.posY, this.posZ, 0.0D, 0.0D, 0.0D);
+this.worldObj.spawnParticle(EnumParticleTypes.CRIT, this.posX, this.posY, this.posZ, 0.0D, 0.0D, 0.0D);
 }
 
 

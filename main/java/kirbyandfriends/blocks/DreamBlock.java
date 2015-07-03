@@ -1,17 +1,17 @@
 package kirbyandfriends.blocks;
 
 import kirbyandfriends.KirbyMod;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockPistonBase;
 import net.minecraft.block.material.Material;
-import net.minecraft.client.renderer.texture.IIconRegister;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.IIcon;
+import net.minecraft.util.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class DreamBlock extends Block
 {
@@ -24,19 +24,17 @@ public class DreamBlock extends Block
 		 setStepSound(Block.soundTypeStone);
 		 } 
 	@SideOnly(Side.CLIENT)
-	public IIcon blockIcon;
-	@SideOnly(Side.CLIENT)
-	public IIcon frontIcon;
 
 	
 	@Override
-	public void onBlockPlacedBy(World world, int x, int y, int z, EntityLivingBase entity, ItemStack itemStack) {
+	public void onBlockPlacedBy(World worldIn, BlockPos pos, IBlockState state, EntityLivingBase placer, ItemStack stack) {
 		// no need to figure out the right orientation again when the piston block can do it for us
-		int direction = BlockPistonBase.determineOrientation(world, x, y, z, entity);
-		world.setBlockMetadataWithNotify(x, y, z, direction, 2);
+		
+		int direction = BlockPistonBase.determineOrientation(worldIn,pos.getX(),pos.getY(), pos.getZ(), placer);
+		worldIn.setBlockMetadataWithNotify(pos.getX(), pos.getY(), pos.getZ(), direction, 2);
 	}
 
-	@SideOnly(Side.CLIENT)
+/*	@SideOnly(Side.CLIENT)
 	@Override
 	public IIcon getIcon(IBlockAccess world, int x, int y, int z, int side) {
 		return (side == world.getBlockMetadata(x, y, z)) ? this.frontIcon : this.blockIcon;
@@ -60,11 +58,8 @@ if(side==3){
 	return frontIcon;
 } else {
 return blockIcon;
+}*/
 }
-}
 
 
 
-
-
-}

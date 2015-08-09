@@ -4,7 +4,7 @@ import org.lwjgl.opengl.GL11;
 
 import kirbyandfriends.KirbyMod;
 import kirbyandfriends.entities.EntityWispy;
-import kirbyandfriends.entities.ModelWispy;
+import kirbyandfriends.models.ModelWispy;
 import net.minecraft.client.renderer.entity.RenderLiving;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;

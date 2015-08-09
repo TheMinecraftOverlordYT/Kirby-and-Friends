@@ -4,7 +4,6 @@ import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.IRangedAttackMob;
 import net.minecraft.entity.ai.EntityAIArrowAttack;
-<<<<<<< HEAD
 import net.minecraft.entity.ai.EntityAIAttackOnCollide;
 import net.minecraft.entity.ai.EntityAIHurtByTarget;
 import net.minecraft.entity.ai.EntityAILookIdle;
@@ -14,9 +13,6 @@ import net.minecraft.entity.ai.EntityAIWander;
 import net.minecraft.entity.ai.EntityAIWatchClosest;
 import net.minecraft.entity.monster.EntityMob;
 import net.minecraft.entity.player.EntityPlayer;
-=======
-import net.minecraft.entity.ai.EntityAINearestAttackableTarget;
->>>>>>> origin/master
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
 
@@ -26,7 +22,6 @@ public class EntityWaddleDoo extends EntityWaddleDee implements IRangedAttackMob
 		super(world);
 		this.tasks.addTask(1, new EntityAIArrowAttack(this, 1.25D, 20, 10.0F));
 		this.targetTasks.addTask(1, new EntityAINearestAttackableTarget(this, EntityLiving.class, 0, true));
-<<<<<<< HEAD
 		this.tasks.addTask(1, new EntityAISwimming(this));
 		this.tasks.addTask(2, new EntityAIAttackOnCollide(this, EntityLiving.class, 1.2D, false));
 		this.tasks.addTask(3, new EntityAIWander(this, 1.0D));
@@ -43,10 +38,6 @@ public class EntityWaddleDoo extends EntityWaddleDee implements IRangedAttackMob
 	    }
 	  
 	  
-=======
-	}
-
->>>>>>> origin/master
 	@Override
     public void attackEntityWithRangedAttack(EntityLivingBase par1EntityLivingBase, float par2)
     {

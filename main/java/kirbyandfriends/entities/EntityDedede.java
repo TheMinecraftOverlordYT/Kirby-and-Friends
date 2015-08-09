@@ -1,9 +1,5 @@
 package kirbyandfriends.entities;
 
-<<<<<<< HEAD
-=======
-import cpw.mods.fml.common.eventhandler.Event.Result;
->>>>>>> origin/master
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.block.Block;
@@ -11,10 +7,6 @@ import net.minecraft.block.material.Material;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EntityLivingBase;
-<<<<<<< HEAD
-=======
-import net.minecraft.entity.IEntityLivingData;
->>>>>>> origin/master
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.EntityAIAttackOnCollide;
 import net.minecraft.entity.ai.EntityAIHurtByTarget;
@@ -25,13 +17,7 @@ import net.minecraft.entity.ai.EntityAIMoveTowardsTarget;
 import net.minecraft.entity.ai.EntityAINearestAttackableTarget;
 import net.minecraft.entity.ai.EntityAIWander;
 import net.minecraft.entity.ai.EntityAIWatchClosest;
-<<<<<<< HEAD
 import net.minecraft.entity.monster.EntityMob;
-=======
-import net.minecraft.entity.ai.attributes.AttributeModifier;
-import net.minecraft.entity.monster.EntityMob;
-import net.minecraft.entity.monster.EntityZombie;
->>>>>>> origin/master
 import net.minecraft.entity.monster.IMob;
 import net.minecraft.entity.passive.IAnimals;
 import net.minecraft.entity.player.EntityPlayer;
@@ -41,14 +27,7 @@ import net.minecraft.item.Item;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.MathHelper;
-<<<<<<< HEAD
 import net.minecraft.world.World;
-=======
-import net.minecraft.world.EnumDifficulty;
-import net.minecraft.world.World;
-import net.minecraftforge.event.ForgeEventFactory;
-import net.minecraftforge.event.entity.living.ZombieEvent.SummonAidEvent;
->>>>>>> origin/master
 
 
 
@@ -265,20 +244,4 @@ public class EntityDedede extends EntityMob implements IAnimals
 	        }
 	    }
 
-<<<<<<< HEAD
-=======
-
-	    /**
-	     * Called when the mob's health reaches 0.
-	     */
-	/*    public void onDeath(DamageSource p_70645_1_)
-	    {
-	        if (this.attackingPlayer != null)
-	        {
-	            this.villageObj.setReputationForPlayer(this.attackingPlayer.getCommandSenderName(), -5);
-	        }
-
-	        super.onDeath(p_70645_1_);
-	    }*/
->>>>>>> origin/master
 }

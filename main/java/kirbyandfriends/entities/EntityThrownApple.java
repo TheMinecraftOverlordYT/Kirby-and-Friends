@@ -2,10 +2,6 @@ package kirbyandfriends.entities;
 
 
 import net.minecraft.entity.EntityLivingBase;
-<<<<<<< HEAD
-=======
-import net.minecraft.entity.IProjectile;
->>>>>>> origin/master
 import net.minecraft.entity.projectile.EntityThrowable;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.MovingObjectPosition;

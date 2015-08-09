@@ -11,20 +11,20 @@ import net.minecraft.world.World;
 
 
 
-public class EntityThrownEmerald extends EntityThrowable {
+public class EntityWaterSpit extends EntityThrowable {
 
 	private double damage = 2.0D;
 	public int knockbackStrength;
 	
-public EntityThrownEmerald(World world) {
+public EntityWaterSpit(World world) {
 super(world);
 }
 
-public EntityThrownEmerald(World world, EntityLivingBase entity, float par2) {
+public EntityWaterSpit(World world, EntityLivingBase entity) {
 super(world, entity);
 }
 
-public EntityThrownEmerald(World world, double x, double y, double z) {
+public EntityWaterSpit(World world, double x, double y, double z) {
 super(world, x, y, z);
 }
 

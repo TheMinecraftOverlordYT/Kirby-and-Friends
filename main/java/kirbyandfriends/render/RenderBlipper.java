@@ -4,7 +4,7 @@ import org.lwjgl.opengl.GL11;
 
 import kirbyandfriends.KirbyMod;
 import kirbyandfriends.entities.EntityBlipper;
-import kirbyandfriends.entities.ModelBlipper;
+import kirbyandfriends.models.ModelBlipper;
 import net.minecraft.client.renderer.entity.RenderLiving;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
@@ -28,7 +28,7 @@ public class RenderBlipper extends RenderLiving {
 	        GL11.glScalef(0.5f, 0.5f, 0.5f);
 	    }
 	  
-	  
+	  /*
 	  protected int shouldRenderPass(EntityBlipper p_77032_1_, int p_77032_2_, float p_77032_3_)
 	    {
 	        if (p_77032_1_.isInvisible())
@@ -53,7 +53,7 @@ public class RenderBlipper extends RenderLiving {
 	            return -1;
 	        }
 	    }
-
+*/
 	  
 	  
 //	   public ModelBase createRandom() {
@@ -80,11 +80,11 @@ public class RenderBlipper extends RenderLiving {
 	    }
 	    
 	   
-	    protected int shouldRenderPass(EntityLivingBase p_77032_1_, int p_77032_2_, float p_77032_3_)
+/*	    protected int shouldRenderPass(EntityLivingBase p_77032_1_, int p_77032_2_, float p_77032_3_)
 	    {
 	        return this.shouldRenderPass((EntityBlipper)p_77032_1_, p_77032_2_, p_77032_3_);
 	    }
-
+*/
 	    
 	  
 	    protected void preRenderCallback(EntityLivingBase entity, float size)

@@ -1,17 +1,29 @@
 package kirbyandfriends.entities;
 
 import net.minecraft.block.material.Material;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityLiving;
+import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.IRangedAttackMob;
 import net.minecraft.entity.SharedMonsterAttributes;
+import net.minecraft.entity.ai.EntityAIArrowAttack;
 import net.minecraft.entity.ai.EntityAIAttackOnCollide;
+import net.minecraft.entity.ai.EntityAIHurtByTarget;
 import net.minecraft.entity.ai.EntityAILeapAtTarget;
+import net.minecraft.entity.ai.EntityAILookIdle;
+import net.minecraft.entity.ai.EntityAINearestAttackableTarget;
+import net.minecraft.entity.ai.EntityAISwimming;
+import net.minecraft.entity.ai.EntityAIWander;
+import net.minecraft.entity.ai.EntityAIWatchClosest;
 import net.minecraft.entity.passive.EntityWaterMob;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.MathHelper;
+import net.minecraft.util.Vec3;
 import net.minecraft.world.World;
 
-public class EntityBlipper extends EntityWaterMob
+public class EntityBlipper extends EntityWaterMob implements IRangedAttackMob
 {
     public float squidPitch;
     public float prevSquidPitch;
@@ -32,6 +44,31 @@ public class EntityBlipper extends EntityWaterMob
     private float randomMotionVecX;
     private float randomMotionVecY;
     private float randomMotionVecZ;
+    
+	 public double targetX;
+     public double targetY;
+     public double targetZ;
+ 	public  float timecount;
+     public boolean disableDamage;
+     private float flySpeed = 0.05F;
+     private float walkSpeed = 0.1F;
+ 	
+ 	
+ 	  /** Animation time at previous tick. */
+    public float prevAnimTime;
+	/** Animation time, used to control the speed of the animation cycles (wings flapping, jaw opening, etc.) */
+    public float animTime;
+    
+    /** Force selecting a new flight target at next tick if set to true. */
+    public boolean forceNewTarget;
+    
+    public boolean slowed;
+    private Entity target;
+    
+    /** Ring buffer array for the last 64 Y-positions and yaw rotations. Used to calculate offsets for the animations. */
+    public double[][] ringBuffer = new double[64][3];
+    /** Index into the ring buffer. Incremented once per tick and restarts at 0 once it reaches the end of the buffer. */
+    public int ringBufferIndex = -1;
 
     public EntityBlipper(World p_i1693_1_)
     {
@@ -40,12 +77,23 @@ public class EntityBlipper extends EntityWaterMob
         this.rotationVelocity = 1.0F / (this.rand.nextFloat() + 1.0F) * 0.2F;
         this.tasks.addTask(3, new EntityAILeapAtTarget(this, 0.4F));
         this.tasks.addTask(4, new EntityAIAttackOnCollide(this, 1.0D, true));
+    	this.tasks.addTask(1, new EntityAIArrowAttack(this, 1.25D, 20, 10.0F));
+		this.targetTasks.addTask(1, new EntityAINearestAttackableTarget(this, EntityLiving.class, 0, true));
+		this.tasks.addTask(1, new EntityAISwimming(this));
+		this.tasks.addTask(2, new EntityAIAttackOnCollide(this, EntityLiving.class, 1.2D, false));
+		this.tasks.addTask(3, new EntityAIWander(this, 1.0D));
+		this.tasks.addTask(4, new EntityAIWatchClosest(this, EntityLiving.class, 8.0F));
+		this.tasks.addTask(5, new EntityAILookIdle(this));
+		this.tasks.addTask(1, new EntityAIArrowAttack(this, 1.25D, 20, 10.0F));
+		this.targetTasks.addTask(1, new EntityAIHurtByTarget(this, false));
+		this.targetTasks.addTask(2, new EntityAINearestAttackableTarget(this, EntityLiving.class, 0, true));
     }
 
     protected void applyEntityAttributes()
     {
         super.applyEntityAttributes();
         this.getEntityAttribute(SharedMonsterAttributes.maxHealth).setBaseValue(10.0D);
+        this.getEntityAttribute(SharedMonsterAttributes.movementSpeed).setBaseValue(0.33000000417232513D);
     }
 
     /**
@@ -56,6 +104,69 @@ public class EntityBlipper extends EntityWaterMob
         return null;
     }
 
+    private void setNewTarget()
+    {
+        this.forceNewTarget = false;
+
+        if (this.rand.nextInt(2) == 0 && !this.worldObj.playerEntities.isEmpty())
+        {
+            this.target = (Entity)this.worldObj.playerEntities.get(this.rand.nextInt(this.worldObj.playerEntities.size()));
+        }
+        else
+        {
+            boolean flag = false;
+
+            do
+            {
+                this.targetX = 0.0D;
+                this.targetZ = 0.0D;
+                this.targetX += (double)(this.rand.nextFloat() * 120.0F - 60.0F);
+                this.targetZ += (double)(this.rand.nextFloat() * 120.0F - 60.0F);
+                double d0 = this.posX - this.targetX;
+                double d1 = this.posY - this.targetY;
+                double d2 = this.posZ - this.targetZ;
+                flag = d0 * d0 + d1 * d1 + d2 * d2 > 100.0D;
+            }
+            while (!flag);
+
+            this.target = null;
+        }
+    }
+
+    /**
+     * Simplifies the value of a number by adding/subtracting 180 to the point that the number is between -180 and 180.
+     */
+    private float simplifyAngle(double p_70973_1_)
+    {
+        return (float)MathHelper.wrapAngleTo180_double(p_70973_1_);
+    }
+    
+    
+    
+    public double[] getMovementOffsets(int p_70974_1_, float p_70974_2_)
+    {
+        if (this.getHealth() <= 0.0F)
+        {
+            p_70974_2_ = 0.0F;
+        }
+
+        p_70974_2_ = 1.0F - p_70974_2_;
+        int j = this.ringBufferIndex - p_70974_1_ * 1 & 63;
+        int k = this.ringBufferIndex - p_70974_1_ * 1 - 1 & 63;
+        double[] adouble = new double[3];
+        double d0 = this.ringBuffer[j][0];
+        double d1 = MathHelper.wrapAngleTo180_double(this.ringBuffer[k][0] - d0);
+        adouble[0] = d0 + d1 * (double)p_70974_2_;
+        d0 = this.ringBuffer[j][1];
+        d1 = this.ringBuffer[k][1] - d0;
+        adouble[1] = d0 + d1 * (double)p_70974_2_;
+        adouble[2] = this.ringBuffer[j][2] + (this.ringBuffer[k][2] - this.ringBuffer[j][2]) * (double)p_70974_2_;
+        return adouble;
+    }
+    
+    
+    
+    
     /**
      * Returns the sound this mob makes when it is hurt.
      */
@@ -123,7 +234,9 @@ public class EntityBlipper extends EntityWaterMob
      */
     public void onLivingUpdate()
     {
+    	
         super.onLivingUpdate();
+
         this.prevSquidPitch = this.squidPitch;
         this.prevSquidYaw = this.squidYaw;
         this.prevSquidRotation = this.squidRotation;
@@ -144,28 +257,7 @@ public class EntityBlipper extends EntityWaterMob
         {
             float f;
 
-            if (this.squidRotation < (float)Math.PI)
-            {
-                f = this.squidRotation / (float)Math.PI;
-                this.tentacleAngle = MathHelper.sin(f * f * (float)Math.PI) * (float)Math.PI * 0.25F;
-
-                if ((double)f > 0.75D)
-                {
-                    this.randomMotionSpeed = 1.0F;
-                    this.field_70871_bB = 1.0F;
-                }
-                else
-                {
-                    this.field_70871_bB *= 0.8F;
-                }
-            }
-            else
-            {
-                this.tentacleAngle = 0.0F;
-                this.randomMotionSpeed *= 0.9F;
-                this.field_70871_bB *= 0.99F;
-            }
-
+           
             if (!this.worldObj.isRemote)
             {
                 this.motionX = (double)(this.randomMotionVecX * this.randomMotionSpeed);
@@ -191,7 +283,7 @@ public class EntityBlipper extends EntityWaterMob
                 this.motionZ = 0.0D;
             }
 
-            this.squidPitch = (float)((double)this.squidPitch + (double)(-90.0F - this.squidPitch) * 0.02D);
+            this.squidPitch = (float)((double)this.squidPitch + (double)(this.squidPitch) * 0.02D);
         }
     }
 
@@ -235,4 +327,17 @@ public class EntityBlipper extends EntityWaterMob
     {
         return this.posY > 45.0D && this.posY < 63.0D && super.getCanSpawnHere();
     }
+
+	@Override
+	public void attackEntityWithRangedAttack(EntityLivingBase par1EntityLivingBase, float par2) {
+		EntityWaterSpit entitylaser = new EntityWaterSpit(this.worldObj, this);
+        double d0 = par1EntityLivingBase.posX - this.posX;
+        double d1 = par1EntityLivingBase.posY + (double)par1EntityLivingBase.getEyeHeight() - 1.100000023841858D - entitylaser.posY;
+        double d2 = par1EntityLivingBase.posZ - this.posZ;
+        float f1 = MathHelper.sqrt_double(d0 * d0 + d2 * d2) * 0.2F;
+        entitylaser.setThrowableHeading(d0, d1 + (double)f1, d2, 1.6F, 12.0F);
+        this.playSound("random.bow", 1.0F, 1.0F / (this.getRNG().nextFloat() * 0.4F + 0.8F));
+        this.worldObj.spawnEntityInWorld(entitylaser);
+		
+	}
 }

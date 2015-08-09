@@ -8,18 +8,12 @@ import net.minecraft.block.material.Material;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityAgeable;
 import net.minecraft.entity.SharedMonsterAttributes;
-<<<<<<< HEAD
 import net.minecraft.entity.ai.EntityAIAttackOnCollide;
 import net.minecraft.entity.ai.EntityAIFollowParent;
 import net.minecraft.entity.ai.EntityAIHurtByTarget;
 import net.minecraft.entity.ai.EntityAILookIdle;
 import net.minecraft.entity.ai.EntityAIMate;
 import net.minecraft.entity.ai.EntityAINearestAttackableTarget;
-=======
-import net.minecraft.entity.ai.EntityAIFollowParent;
-import net.minecraft.entity.ai.EntityAILookIdle;
-import net.minecraft.entity.ai.EntityAIMate;
->>>>>>> origin/master
 import net.minecraft.entity.ai.EntityAIPanic;
 import net.minecraft.entity.ai.EntityAISwimming;
 import net.minecraft.entity.ai.EntityAITempt;
@@ -29,10 +23,7 @@ import net.minecraft.entity.ai.attributes.IAttribute;
 import net.minecraft.entity.ai.attributes.RangedAttribute;
 import net.minecraft.entity.passive.EntityAnimal;
 import net.minecraft.entity.player.EntityPlayer;
-<<<<<<< HEAD
 import net.minecraft.init.Blocks;
-=======
->>>>>>> origin/master
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -65,7 +56,6 @@ public class EntityWaddleDee extends EntityAnimal{
 	        this.tasks.addTask(6, new EntityAIWander(this, 1.0D));
 	        this.tasks.addTask(7, new EntityAIWatchClosest(this, EntityPlayer.class, 6.0F));
 	        this.tasks.addTask(8, new EntityAILookIdle(this));
-<<<<<<< HEAD
 	        this.tasks.addTask(1, new EntityAISwimming(this));
 	        this.tasks.addTask(2, new EntityAIAttackOnCollide(this, EntityPlayer.class, 1.2D, false));
 	        this.tasks.addTask(3, new EntityAIWander(this, 1.0D));
@@ -75,8 +65,6 @@ public class EntityWaddleDee extends EntityAnimal{
 	        this.targetTasks.addTask(1, new EntityAIHurtByTarget(this, false));
 	        this.targetTasks.addTask(2, new EntityAINearestAttackableTarget(this, EntityPlayer.class, 0, true));
 	        this.targetTasks.addTask(2, new EntityAINearestAttackableTarget(this, EntityKirby.class, 0, true));
-=======
->>>>>>> origin/master
 	}
 
     public boolean isWaddleJumping()
@@ -227,10 +215,7 @@ public class EntityWaddleDee extends EntityAnimal{
 	    
 	 public void onLivingUpdate(){
 		  
-<<<<<<< HEAD
 		 super.onLivingUpdate();
-=======
->>>>>>> origin/master
 	        int k;
 
 	        if (!this.worldObj.isRemote && this.jumpRearingCounter > 0 && ++this.jumpRearingCounter > 20)
@@ -260,12 +245,8 @@ public class EntityWaddleDee extends EntityAnimal{
 	               //     {
 	                        this.func_146081_a(block);
 	                     ///   this.setCarryingData(this.worldObj.getBlockMetadata(k, i, j));
-<<<<<<< HEAD
 	                       // this.worldObj.setBlock(k, i, j, KirbyMod.DreamBlock);
 
-=======
-	                        this.worldObj.setBlock(k, i, j, KirbyMod.DreamBlock);
->>>>>>> origin/master
 	                    }
 	                
 	            else if (this.rand.nextInt(2000) == 0)
@@ -279,11 +260,7 @@ public class EntityWaddleDee extends EntityAnimal{
 	                if (block.getMaterial() == Material.air && block1.getMaterial() == Material.air && block1.renderAsNormalBlock())
 	                {
 	               //     this.worldObj.setBlock(k, i, j, this.func_146080_bZ(), this.getCarryingData(), 3);
-<<<<<<< HEAD
 	                    this.func_146081_a(Blocks.air);
-=======
-	                    this.func_146081_a(KirbyMod.DreamBlock);
->>>>>>> origin/master
 	                }
 	            }
 	            else {

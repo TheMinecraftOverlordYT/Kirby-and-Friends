@@ -1,6 +1,24 @@
 itemGroup.Kirby=Kirby
+
+==========Entities=============
 entity.Kirby.name=Kirby
-entity.CreepyKirby.name=Creepy Kirby
+entity.Creepy.name=Creepy Kirby
+entity.waddledoo.name=Waddle Doo
+entity.waddledee.name=Waddle Dee
+entity.Wispy.name=Wispy
+entity.Blipper.name=Blipper
+
+=====================
+
+=============Blocks==============
+tile.DreamBlock.name=Dream Block
+=============Items=============
 item.custommonsterplacer.name=Dial for 
 item.wishstar.name=Wish Star
-tile.DreamBlock.name=Dream Block
+
+
+item.spawncreepy.name=Spawn ?????
+
+item.wishstar.name=Wish Star
+item.maximtomato.name=Maxim Tomato
+item.Lollipop.name=Lollipop 

@@ -2,45 +2,42 @@ package kirbyandfriends;
 import kirbyandfriends.entities.*;
 import kirbyandfriends.items.CustomEntityList;
 import kirbyandfriends.items.CustomMonsterPlacer;
+import kirbyandfriends.items.ItemGalaxia;
 import kirbyandfriends.items.ItemHammer;
 import kirbyandfriends.items.ItemSummonCreepy;
 import kirbyandfriends.items.Lollipop;
 import kirbyandfriends.items.Maxim_Tomato;
 import kirbyandfriends.items.WishStar;
-import kirbyandfriends.models.ModelKirby;
+import kirbyandfriends.keys.KeyHandler;
+import kirbyandfriends.keys.ShoulderKeyHandler;
+import kirbyandfriends.keys.Keybinding;
 import kirbyandfriends.packet_handling.SpawnPacket;
 import kirbyandfriends.packet_handling.SpawnPacket.SpawnPacketHandler;
-import kirbyandfriends.render.RenderBlipper;
-import kirbyandfriends.render.RenderCreepy;
-import kirbyandfriends.render.RenderDedede;
-import kirbyandfriends.render.RenderKirbyPaletteA;
-import kirbyandfriends.render.RenderWaddleDee;
 import kirbyandfriends.schematics.hallberd.WorldGenerationHalberd;
 import net.minecraft.block.Block;
-import net.minecraft.block.material.Material;
+import net.minecraft.client.settings.KeyBinding;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityLiving;
-import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.EnumCreatureType;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.projectile.EntityThrowable;
 import net.minecraft.item.Item;
 import net.minecraft.item.Item.ToolMaterial;
 import net.minecraft.world.biome.BiomeGenBase;
-import net.minecraftforge.client.event.RenderLivingEvent;
-import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.config.Configuration;
-import cpw.mods.fml.client.registry.RenderingRegistry;
+import net.minecraftforge.common.config.Property;
+
+import java.util.logging.Logger;
+
+import org.lwjgl.input.Keyboard;
+
 import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.Mod.EventHandler;
 import cpw.mods.fml.common.Mod.Instance;
+import cpw.mods.fml.common.ModMetadata;
 import cpw.mods.fml.common.SidedProxy;
 import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
-import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import cpw.mods.fml.common.network.NetworkRegistry;
 import cpw.mods.fml.common.network.simpleimpl.SimpleNetworkWrapper;
 import cpw.mods.fml.common.registry.EntityRegistry;
@@ -79,6 +76,14 @@ public class KirbyMod {
 
 	    public static SimpleNetworkWrapper network;
 	 
+        private ShoulderKeyHandler kbh;
+		private int Key;
+		public static Item galaxia;
+        public static Configuration config;
+        private static boolean enabled = true;
+        public static Logger logger;
+	    
+	    
 	    @Instance("kirbyandfriends")
 	    public static KirbyMod instance;
 	    
@@ -92,7 +97,7 @@ public class KirbyMod {
 	    }
 	};
 	
-	
+
 	
 	
 	@EventHandler
@@ -117,7 +122,8 @@ public class KirbyMod {
 	    WispySpawnRate= config.get("Options", "Whispy spawn rate", 10).getInt();
 	    KirbyPhoneColor = config.get("Options", "Color for Kirby`s phone(Use this calculation:(myColor.getRed() << 16) + (myColor.getGreen() << 8) + myColor.getBlue();",  15771042).getInt();
 	 	WaddleDooPhoneColor = config.get("Options", "Color for Waddle Doo`s phone", 14377823).getInt(); 
-	    config.save();
+	    Key = config.get("Options", "Key to shoot wishstars. Using keyboard codes.", Keyboard.KEY_P).getInt(); 
+	 	config.save();
 		 proxy.registerRenderers();
 		 //RenderingRegistry.registerEntityRenderingHandler(EntityKirby.class, new RenderKirbyPaletteA(new ModelKirby(), 0.3F));
 		  //RenderingRegistry.registerEntityRenderingHandler(EntityCreepy.class, new RenderCreepy(new ModelKirby(), 0.3F));
@@ -144,6 +150,11 @@ public class KirbyMod {
 	public void load(FMLInitializationEvent event)
 	{
 		int entityid= 0;
+		FMLCommonHandler.instance().bus().register(new KeyHandler());
+		 // kbh = ShoulderKeybindings.registerKeybindings();
+		  
+	
+		
 		
 		GameRegistry.registerWorldGenerator(new WorldGenerationHalberd(), 100);
 			
@@ -176,7 +187,7 @@ public class KirbyMod {
 		 DreamBlock = new DreamBlock().setCreativeTab(tabCustom).setBlockName("DreamBlock");
 		 creepyspawn = new ItemSummonCreepy().setUnlocalizedName("spawncreepy");
 		hammer = new ItemHammer(ToolMaterial.WOOD).setUnlocalizedName("hammer").setCreativeTab(tabCustom).setTextureName("kirbyandfriends:hammer"); 
-		 
+		 galaxia = new ItemGalaxia(ToolMaterial.GOLD); 
 		 
 		 GameRegistry.registerItem(creepyspawn,"spawncreeepy");
 		 GameRegistry.registerItem(custommonsterplacer, "custommonsterplacer");

@@ -102,7 +102,7 @@ public class KirbyMod {
 	
 	@EventHandler
 	  public void preInit(FMLPreInitializationEvent event) {
-		
+
 	     // proxy.initOther();
 	
 		//MinecraftForge.EVENT_BUS.register(new OverridePlayer());
@@ -150,7 +150,7 @@ public class KirbyMod {
 	public void load(FMLInitializationEvent event)
 	{
 		int entityid= 0;
-		FMLCommonHandler.instance().bus().register(new KeyHandler());
+		
 		 // kbh = ShoulderKeybindings.registerKeybindings();
 		  
 	
@@ -205,6 +205,7 @@ public class KirbyMod {
 	   @EventHandler
 	    public void postInit(FMLPostInitializationEvent event)
 	    {
+			//FMLCommonHandler.instance().bus().register(new KeyHandler());
 	    }
 }
 	

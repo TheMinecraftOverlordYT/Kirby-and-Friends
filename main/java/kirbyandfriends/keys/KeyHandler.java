@@ -28,9 +28,8 @@ private static final String[] desc = {"key.tut_inventory.desc"};
 private static final int[] keyValues = {Keyboard.KEY_P};
 private final KeyBinding[] keys;
 
-static World world; 
 static Random random;
-static EntityPlayer player = Minecraft.getMinecraft().thePlayer; 
+
 
 public KeyHandler() {
 keys = new KeyBinding[desc.length];
@@ -47,7 +46,9 @@ public void onKeyInput(KeyInputEvent event) {
 // FMLClientHandler.instance().getClient().inGameHasFocus
 if (!FMLClientHandler.instance().isGUIOpen(GuiChat.class)) {
 if (keys[CUSTOM_INV].isPressed()) {
+	World world = Minecraft.getMinecraft().theWorld; 
 	EntityThrownWishStar entitylaser = new EntityThrownWishStar(world);
+    EntityPlayer player = Minecraft.getMinecraft().thePlayer; 
     double d0 = player.posX ;
     double d1 = player.posY + (double)player.getEyeHeight() - 1.100000023841858D - entitylaser.posY;
     double d2 = player.posZ;

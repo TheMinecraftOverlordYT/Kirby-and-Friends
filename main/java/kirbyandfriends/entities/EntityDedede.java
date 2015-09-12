@@ -206,7 +206,7 @@ public class EntityDedede extends EntityMob implements IAnimals
 	     */
 	    protected String getHurtSound()
 	    {
-	        return "mob.irongolem.hit";
+	        return "mob.ocelot.hit";
 	    }
 
 	    /**
@@ -219,7 +219,7 @@ public class EntityDedede extends EntityMob implements IAnimals
 
 	    protected void func_145780_a(int p_145780_1_, int p_145780_2_, int p_145780_3_, Block p_145780_4_)
 	    {
-	        this.playSound("mob.irongolem.walk", 1.0F, 1.0F);
+	        this.playSound("mob.wolf.walk", 1.0F, 1.0F);
 	    }
 
 	    /**
@@ -233,14 +233,14 @@ public class EntityDedede extends EntityMob implements IAnimals
 
 	        for (k = 0; k < j; ++k)
 	        {
-	            this.func_145778_a(Item.getItemFromBlock(Blocks.red_flower), 1, 0.0F);
+	            this.func_145778_a(Item.getItemFromBlock(Item.wish_Star), 1, 0.0F);
 	        }
 
 	        k = 3 + this.rand.nextInt(3);
 
 	        for (int l = 0; l < k; ++l)
 	        {
-	            this.dropItem(Items.iron_ingot, 1);
+	            this.dropItem(Block.blockDream, 1);
 	        }
 	    }
 

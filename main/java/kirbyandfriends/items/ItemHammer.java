@@ -59,7 +59,7 @@ public class ItemHammer extends Item {
     @SideOnly(Side.CLIENT)
     public boolean isFull3D()
     {
-        return false;
+        return true;
     }
 
     /**

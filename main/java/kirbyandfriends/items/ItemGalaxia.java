@@ -16,7 +16,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 
-public class ItemGalaxia extends Item {
+public class ItemGalaxia extends ItemSword {
 
     private float damage;
     private final Item.ToolMaterial material;
